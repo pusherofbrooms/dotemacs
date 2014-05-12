@@ -39,6 +39,7 @@
 ;; yes/no becomes y/n in any yes/no prompt.
 (fset `yes-or-no-p 'y-or-n-p)
 
+
 ;; Custom 'apropos' key bindings. I haven't decided whether I like them.
 (global-set-key (kbd "C-h C-a") 'Apropos-Prefix)
 (define-prefix-command 'Apropos-Prefix nil "Apropos (a,d,f,i,l,v,C-v)")
