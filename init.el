@@ -1,25 +1,45 @@
+;; This is an emacs init for rails. It is tested with emacs 24.3 and 24.4.
+;; The base requirement is package.el, which is included in the emacs 24
+;; distribution.
 
+;; no gnu splash screen on startup
 (setq inhibit-splash-screen t)
-(blink-cursor-mode 0)
+
+;; default is on. Change to 0 to turn it off. I like the visual queue
+;;these days.
+(blink-cursor-mode 1)
+
+;; empty message in the scratch buffer on startup
 (setq initial-scratch-message "")
 (setq inhibit-startup-message t)
+
+;; I use the scroll bar to indicate where in the file I am. Some folks
+;; turn this off.
 ;;(scroll-bar-mode 0)
+
+;; No toolbar, no menu. They take up a lot of space.
 (tool-bar-mode 0)
 (menu-bar-mode 0)
+
+;; Show line number and column number in the mode line.
 (line-number-mode 1)
 (column-number-mode 1)
 
-;; No confirm messages
+;; opens a buffer on a new file without confirmation (seen in C-x C-f)
 (setq confirm-nonexistent-file-or-buffer nil)
+
+;; opens a new buffer without ido confirmation that the buffer doesn't exist.
 (setq ido-create-new-buffer 'always)
+
 ;; always kill the buffer on exit
 (setq kill-buffer-query-functions
   (remq 'process-kill-buffer-query-function
     kill-buffer-query-functions))
-;; yes/no becomes y/n
+
+;; yes/no becomes y/n in any yes/no prompt.
 (fset `yes-or-no-p 'y-or-n-p)
 
-;; Custom 'apropos' key bindings
+;; Custom 'apropos' key bindings. I haven't decided whether I like them.
 (global-set-key (kbd "C-h C-a") 'Apropos-Prefix)
 (define-prefix-command 'Apropos-Prefix nil "Apropos (a,d,f,i,l,v,C-v)")
 (define-key Apropos-Prefix (kbd "a")   'apropos)
@@ -32,6 +52,7 @@
 (define-key Apropos-Prefix (kbd "v")   'apropos-variable)
 (define-key Apropos-Prefix (kbd "C-v") 'apropos-value)
 
+;; Bind these files and file types to ruby
 (add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
@@ -41,9 +62,11 @@
 (custom-set-variables
  '(custom-enabled-themes (quote (wombat))))
 
+;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
 (global-set-key (kbd "C-c c") 'org-capture)
 
+;; dired-x experimentation. Feel free to hack this out.
 (add-hook 'dired-load-hook
 	  (lambda ()
 	    (load "dired-x")
@@ -52,7 +75,7 @@
 
 
 ;;
-;; Try to do any work that doesn't require outside packages before this
+;; Try to do any work that doesn't require outside packages before this point.
 ;;
 (require 'package)
 ;; extra package repositories
@@ -64,27 +87,32 @@
 (package-initialize)
 
 (defvar prelude-packages
+  ;; ths is the list of packages that we look for on startup. If some or all
+  ;; are missing, we fetch and install them.
   '(inf-ruby rvm projectile projectile-rails flx-ido robe auto-complete
     web-mode bundler magit scss-mode)
   "Be sure these are installed at launch")
 
 ;; cl is required for the loop
 (require 'cl)
+;; Checks if any packages are missing.
 (defun prelude-packages-installed-p ()
   (loop for p in prelude-packages
 	when (not (package-installed-p p)) do (return nil)
 	finally (return t)))
 
+;; Install any missing packages. Updates are left as an exercise for the
+;; dear reader.
 (unless (prelude-packages-installed-p)
-(message "%s" "Emacs Prelude is now refreshing its package database...")
-(package-refresh-contents)
-(message "%s" " package refresh is done")
-(dolist (p prelude-packages)
-  (when (not (package-installed-p p))
-    (package-install p))))
+  (message "%s" "Emacs Prelude is now refreshing its package database...")
+  (package-refresh-contents)
+  (message "%s" " package refresh is done")
+  (dolist (p prelude-packages)
+    (when (not (package-installed-p p))
+      (package-install p))))
 (provide 'prelude-packages)
 
-;; fuzzy matching. Seems a bit wonky with file find (C-x C-f)
+;; fuzzy matching in find-file, buffer searches, and other places.
 (require 'flx-ido)
 (ido-mode 1)
 (ido-everywhere 1)
@@ -96,7 +124,7 @@
 (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process" t)
 (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
 
-;; activate rvm
+;; activate rvm and use the default gem set.
 (require 'rvm)
 (rvm-use-default)
 ;; (global-set-key (kbd "C-c r a") 'rvm-activate-corresponding-ruby)
@@ -110,7 +138,7 @@
 (require 'robe)
 (add-hook 'ruby-mode-hook 'robe-mode)
 
-;; Interact with bundler
+;; Interact with bundle.
 (require 'bundler)
 (global-set-key (kbd "C-c r b i") 'bundle-install)
 (global-set-key (kbd "C-c r b u") 'bundle-update)
@@ -121,7 +149,8 @@
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.rhtml\\'" . web-mode))
 
-;; magit status
+;; magit is a mode for interacting with git.
+;; The binding below for magit status is convenient for me.
 (global-set-key (kbd "M-`") 'magit-status)
 
 ;; auto-complete
