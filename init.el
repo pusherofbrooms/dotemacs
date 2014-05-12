@@ -161,5 +161,5 @@
 (add-to-list 'ac-modes 'web-mode)
 
 ;; turn off auto-compile for scss mode as it doesn't seem to work with
-;; rails
+;; rails.
 (setq scss-compile-at-save nil)
