@@ -32,10 +32,10 @@
 
 ;; I use the scroll bar to indicate where in the file I am. Some folks
 ;; turn this off.
-;;(when (foundp 'scroll-bar-mode) (scroll-bar-mode 0))
+;;(when (fboundp 'scroll-bar-mode) (scroll-bar-mode 0))
 
 ;; No toolbar, no menu. They take up a lot of space.
-(when (foundp 'tool-bar-mode) (tool-bar-mode 0))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode 0))
 (menu-bar-mode 0)
 
 ;; Show line number and column number in the mode line.
