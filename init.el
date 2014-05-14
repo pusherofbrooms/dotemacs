@@ -42,7 +42,8 @@
 (line-number-mode 1)
 (column-number-mode 1)
 
-;; Start with two windows
+;; I always split my initial window before performing other operations,
+;; so I moved it to startup.
 (split-window-horizontally)
 
 ;; yes/no becomes y/n in any yes/no prompt.
