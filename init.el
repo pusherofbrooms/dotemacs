@@ -5,25 +5,9 @@
 ;; no gnu splash screen on startup
 (setq inhibit-splash-screen t)
 
-;; default is on. Change to 0 to turn it off. I like the visual queue
-;;these days.
-(blink-cursor-mode 1)
-
 ;; empty message in the scratch buffer on startup
 (setq initial-scratch-message "")
 (setq inhibit-startup-message t)
-
-;; I use the scroll bar to indicate where in the file I am. Some folks
-;; turn this off.
-;;(scroll-bar-mode 0)
-
-;; No toolbar, no menu. They take up a lot of space.
-(tool-bar-mode 0)
-(menu-bar-mode 0)
-
-;; Show line number and column number in the mode line.
-(line-number-mode 1)
-(column-number-mode 1)
 
 ;; opens a buffer on a new file without confirmation (seen in C-x C-f)
 (setq confirm-nonexistent-file-or-buffer nil)
@@ -36,9 +20,42 @@
   (remq 'process-kill-buffer-query-function
     kill-buffer-query-functions))
 
+;; always use spaces.
+(setq-default indent-tabs-mode nil)
+
+;; set apropos to search more broadly.
+(setq apropos-do-all t)
+
+;; default is on. Change to 0 to turn it off. I like the visual queue
+;;these days.
+(blink-cursor-mode 1)
+
+;; I use the scroll bar to indicate where in the file I am. Some folks
+;; turn this off.
+;;(when (foundp 'scroll-bar-mode) (scroll-bar-mode 0))
+
+;; No toolbar, no menu. They take up a lot of space.
+(when (foundp 'tool-bar-mode) (tool-bar-mode 0))
+(menu-bar-mode 0)
+
+;; Show line number and column number in the mode line.
+(line-number-mode 1)
+(column-number-mode 1)
+
+;; Start with two windows
+(split-window-horizontally)
+
 ;; yes/no becomes y/n in any yes/no prompt.
 (fset `yes-or-no-p 'y-or-n-p)
 
+;; I use regex search more than search, so swap key bindings
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-M-s") 'isearch-forward)
+(global-set-key (kbd "C-M-r") 'isearch-backward)
+
+;; use ibuffer instead of the standard buffer list.
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; Custom 'apropos' key bindings. I haven't decided whether I like them.
 (global-set-key (kbd "C-h C-a") 'Apropos-Prefix)
