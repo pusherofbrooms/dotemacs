@@ -26,6 +26,9 @@
 ;; set apropos to search more broadly.
 (setq apropos-do-all t)
 
+;; No backup files please
+(setq make-backup-files nil)
+
 ;; default is on. Change to 0 to turn it off. I like the visual queue
 ;;these days.
 (blink-cursor-mode 1)
