@@ -92,6 +92,31 @@
 	    (setq dired-x-hands-off-my-keys nil)
 	    ))
 
+;; Pulled from emacs wiki and modified a bit.
+;; "C-c d" inserts a yyyy-mm-dd date.
+(defun insert-date (prefix)
+  "Insert the current ISO formated date. Write out day and month with
+C-u prefix. mm-dd-yy with two C-u prefixes."
+  (interactive "P")
+  (let ((format (cond
+                 ((not prefix) "%Y-%m-%d")
+                 ((equal prefix '(4)) "%A, %d %B %Y")
+                 ((equal prefix '(16)) "%d-%m-%Y"))))
+        (insert (format-time-string format))))
+(global-set-key (kbd "C-c d") 'insert-date)
+
+;; Similar to insert-date except that we add HH:MM:SS. Adjust the format
+;; strings to taste. If you don't like seconds, remove the ":%S"
+(defun insert-timestamp (prefix)
+  "Insert the current iso format timestamp. Write out day and month with C-u
+prefix. common broken format with two C-u prefixes."
+  (interactive "P")
+  (let ((format (cond
+                 ((not prefix) "%Y-%m-%d %H:%M:%S")
+                 ((equal prefix '(4)) "%A, %d %B %Y %H:%M:%S")
+                 ((equal prefix '(16)) "%d-%m-%Y %H:%M:%S"))))
+        (insert (format-time-string format))))
+(global-set-key (kbd "C-c t") 'insert-timestamp)
 
 ;;
 ;; Try to do any work that doesn't require outside packages before this point.
