@@ -26,8 +26,22 @@
 ;; set apropos to search more broadly.
 (setq apropos-do-all t)
 
-;; No backup files please
-(setq make-backup-files nil)
+;; Backup file buffer settings.
+;; (setq make-backup-files nil)
+(setq
+ backup-by-copying t                ; don't clobber symlinks
+ backup-directory-alist
+ '(("." . "~/.emacs.d/backups"))    ; don't litter my fs tree
+ delete-old-versions t
+ kept-new-versions 4
+ kept-old-versions 0
+ version-control t)                 ; use versioned backups
+
+;; From emacs wiki. Forces a backup of the file by telling
+;; emacs the file hasn't been backed up. Feels hackish.
+(defun force-backup-of-buffer ()
+  (setq buffer-backed-up nil))
+(add-hook 'before-save-hook  'force-backup-of-buffer)
 
 ;; default is on. Change to 0 to turn it off. I like the visual queue
 ;;these days.
