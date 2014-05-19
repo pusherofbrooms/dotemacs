@@ -33,7 +33,7 @@
  backup-directory-alist
  '(("." . "~/.emacs.d/backups"))    ; don't litter my fs tree
  delete-old-versions t
- kept-new-versions 4
+ kept-new-versions 20
  kept-old-versions 0
  version-control t)                 ; use versioned backups
 
