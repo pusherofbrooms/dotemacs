@@ -16,6 +16,8 @@
 (setq ido-create-new-buffer 'always)
 
 ;; always kill the buffer on exit
+;; seems to produce the same result as
+;; (setq kill-buffer-query-functions nil)
 (setq kill-buffer-query-functions
   (remq 'process-kill-buffer-query-function
     kill-buffer-query-functions))
@@ -27,7 +29,6 @@
 (setq apropos-do-all t)
 
 ;; Backup file buffer settings.
-;; (setq make-backup-files nil)
 (setq
  backup-by-copying t                ; don't clobber symlinks
  backup-directory-alist
