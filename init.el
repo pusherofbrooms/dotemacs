@@ -100,7 +100,11 @@
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c b") 'org-iswitchb)
+(global-set-key (kbd "C-c l") 'org-store-link)
 
 ;; dired-x experimentation. Feel free to hack this out.
 (add-hook 'dired-load-hook
@@ -112,12 +116,12 @@
 ;; Pulled from emacs wiki and modified a bit.
 ;; "C-c d" inserts a yyyy-mm-dd date.
 (defun insert-date (prefix)
-  "Insert the current ISO formated date. Write out day and month with
+  "Insert the current org-mode formated date. ISO format with
 C-u prefix. mm-dd-yy with two C-u prefixes."
   (interactive "P")
   (let ((format (cond
-                 ((not prefix) "%Y-%m-%d")
-                 ((equal prefix '(4)) "%A, %d %B %Y")
+                 ((not prefix) "<%Y-%m-%d %a>")
+                 ((equal prefix '(4)) "%Y-%m-%d")
                  ((equal prefix '(16)) "%d-%m-%Y"))))
         (insert (format-time-string format))))
 (global-set-key (kbd "C-c d") 'insert-date)
@@ -125,12 +129,12 @@ C-u prefix. mm-dd-yy with two C-u prefixes."
 ;; Similar to insert-date except that we add HH:MM:SS. Adjust the format
 ;; strings to taste. If you don't like seconds, remove the ":%S"
 (defun insert-timestamp (prefix)
-  "Insert the current iso format timestamp. Write out day and month with C-u
+  "Insert the current org-mode format timestamp. ISO format with C-u
 prefix. common broken format with two C-u prefixes."
   (interactive "P")
   (let ((format (cond
-                 ((not prefix) "%Y-%m-%d %H:%M:%S")
-                 ((equal prefix '(4)) "%A, %d %B %Y %H:%M:%S")
+                 ((not prefix) "<%Y-%m-%d %a %H:%M:%S>")
+                 ((equal prefix '(4)) "%Y-%m-%d %H:%M:%S")
                  ((equal prefix '(16)) "%d-%m-%Y %H:%M:%S"))))
         (insert (format-time-string format))))
 (global-set-key (kbd "C-c t") 'insert-timestamp)
