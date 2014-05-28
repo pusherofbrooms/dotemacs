@@ -84,7 +84,8 @@
 
 ;; nice medium contrast theme
 (custom-set-variables
- '(custom-enabled-themes (quote (wombat))))
+ '(custom-enabled-themes (quote (wombat)))
+ '(org-agenda-files (quote ("~/notes.org"))))
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
@@ -93,6 +94,11 @@
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c b") 'org-iswitchb)
 (global-set-key (kbd "C-c l") 'org-store-link)
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "~/notes.org" "Tasks")
+         "* TODO %?\n %i\n %a")
+        ("j" "Journal" entry (file+datetree "~/notes.org")
+         "* %?\nEntered on %U\n %i\n %a")))
 
 ;; dired-x experimentation. Feel free to hack this out.
 (add-hook 'dired-load-hook
@@ -216,3 +222,4 @@ prefix. common broken format with two C-u prefixes."
 ;; turn off auto-compile for scss mode as it doesn't seem to work with
 ;; rails.
 (setq scss-compile-at-save nil)
+
