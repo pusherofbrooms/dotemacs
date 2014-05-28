@@ -76,19 +76,6 @@
 ;; use ibuffer instead of the standard buffer list.
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-;; Custom 'apropos' key bindings. I haven't decided whether I like them.
-(global-set-key (kbd "C-h C-a") 'Apropos-Prefix)
-(define-prefix-command 'Apropos-Prefix nil "Apropos (a,d,f,i,l,v,C-v)")
-(define-key Apropos-Prefix (kbd "a")   'apropos)
-(define-key Apropos-Prefix (kbd "C-a") 'apropos)
-(define-key Apropos-Prefix (kbd "d")   'apropos-documentation)
-(define-key Apropos-Prefix (kbd "f")   'apropos-command)
-(define-key Apropos-Prefix (kbd "c")   'apropos-command)
-(define-key Apropos-Prefix (kbd "i")   'info-apropos)
-(define-key Apropos-Prefix (kbd "l")   'apropos-library)
-(define-key Apropos-Prefix (kbd "v")   'apropos-variable)
-(define-key Apropos-Prefix (kbd "C-v") 'apropos-value)
-
 ;; Bind these files and file types to ruby
 (add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
