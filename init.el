@@ -85,6 +85,7 @@
 ;; nice medium contrast theme
 (custom-set-variables
  '(custom-enabled-themes (quote (wombat)))
+;; Which files org-mode agenda should track
  '(org-agenda-files (quote ("~/notes.org"))))
 
 ;; org-mode experimentation. Feel free to hack this out.
