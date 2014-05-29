@@ -218,6 +218,10 @@ prefix. common broken format with two C-u prefixes."
 (setq ac-ignore-case nil)
 (add-to-list 'ac-modes 'ruby-mode)
 (add-to-list 'ac-modes 'web-mode)
+;; autocomplete for inf-ruby
+(eval-after-load 'auto-complete
+  '(add-to-list 'ac-modes 'inf-ruby-mode))
+(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)
 
 ;; turn off auto-compile for scss mode as it doesn't seem to work with
 ;; rails.
