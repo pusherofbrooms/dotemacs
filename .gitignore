@@ -1,0 +1,10 @@
+/elpa/
+/eshell/
+/url/
+/auto-save-list/
+/backups/
+bookmarks
+tramp
+projectile.cache
+projectile-bookmarks.eld
+ac-comphist.dat
