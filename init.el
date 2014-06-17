@@ -219,6 +219,7 @@ prefix. common broken format with two C-u prefixes."
 (setq ac-ignore-case nil)
 (add-to-list 'ac-modes 'ruby-mode)
 (add-to-list 'ac-modes 'web-mode)
+(add-to-list 'ac-modes 'python-mode)
 ;; autocomplete for inf-ruby
 (eval-after-load 'auto-complete
   '(add-to-list 'ac-modes 'inf-ruby-mode))
