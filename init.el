@@ -150,7 +150,7 @@ prefix. common broken format with two C-u prefixes."
   ;; ths is the list of packages that we look for on startup. If some or all
   ;; are missing, we fetch and install them.
   '(inf-ruby rvm projectile projectile-rails flx-ido robe auto-complete
-    web-mode bundler magit scss-mode)
+    web-mode bundler magit scss-mode jedi)
   "Be sure these are installed at launch")
 
 ;; cl is required for the loop
@@ -219,7 +219,7 @@ prefix. common broken format with two C-u prefixes."
 (setq ac-ignore-case nil)
 (add-to-list 'ac-modes 'ruby-mode)
 (add-to-list 'ac-modes 'web-mode)
-(add-to-list 'ac-modes 'python-mode)
+;;(add-to-list 'ac-modes 'python-mode)
 ;; autocomplete for inf-ruby
 (eval-after-load 'auto-complete
   '(add-to-list 'ac-modes 'inf-ruby-mode))
@@ -229,3 +229,6 @@ prefix. common broken format with two C-u prefixes."
 ;; rails.
 (setq scss-compile-at-save nil)
 
+;; jedi requires python virtualenv to run
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
