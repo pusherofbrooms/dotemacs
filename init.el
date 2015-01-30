@@ -150,7 +150,7 @@ prefix. common broken format with two C-u prefixes."
   ;; ths is the list of packages that we look for on startup. If some or all
   ;; are missing, we fetch and install them.
   '(inf-ruby rvm projectile projectile-rails flx-ido robe auto-complete
-    web-mode bundler magit scss-mode jedi)
+    web-mode bundler magit scss-mode jedi rust-mode flycheck flycheck-rust)
   "Be sure these are installed at launch")
 
 ;; cl is required for the loop
