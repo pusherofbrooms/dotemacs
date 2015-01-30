@@ -3,6 +3,9 @@
 /url/
 /auto-save-list/
 /backups/
+/games/
+/.python-environments/
+session.*
 bookmarks
 tramp
 projectile.cache

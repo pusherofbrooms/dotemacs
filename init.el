@@ -232,3 +232,7 @@ prefix. common broken format with two C-u prefixes."
 ;; jedi requires python virtualenv to run
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
+
+(setq python-shell-interpreter "python3")
+;; (setq ipython-command "ipython3")
+;; (require 'ipython)
