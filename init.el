@@ -85,8 +85,10 @@
 ;; nice medium contrast theme
 (custom-set-variables
  '(custom-enabled-themes (quote (wombat)))
-;; Which files org-mode agenda should track
- '(org-agenda-files (quote ("~/notes.org"))))
+ '(org-agenda-files (quote ("~/notes.org")))
+ '(package-selected-packages
+   (quote
+    (ess multi-term typing scss-mode rvm robe powerline magit jedi ipython flycheck-rust flx-ido bundler ac-inf-ruby))))
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
@@ -234,5 +236,6 @@ prefix. common broken format with two C-u prefixes."
 (setq jedi:complete-on-dot t)
 
 (setq python-shell-interpreter "python3")
-;; (setq ipython-command "ipython3")
-;; (require 'ipython)
+;;(setq ipython-command "ipython3")
+;;(require 'ipython)
+
