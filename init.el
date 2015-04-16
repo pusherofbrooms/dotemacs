@@ -88,7 +88,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (ess multi-term typing scss-mode rvm robe powerline magit jedi ipython flycheck-rust flx-ido bundler ac-inf-ruby))))
+    (virtualenvwrapper ess multi-term typing scss-mode rvm robe powerline magit jedi ipython flycheck-rust flx-ido bundler ac-inf-ruby))))
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
@@ -152,7 +152,7 @@ prefix. common broken format with two C-u prefixes."
   ;; ths is the list of packages that we look for on startup. If some or all
   ;; are missing, we fetch and install them.
   '(inf-ruby rvm projectile projectile-rails flx-ido robe auto-complete
-    web-mode bundler magit scss-mode jedi rust-mode flycheck flycheck-rust)
+    web-mode bundler magit scss-mode jedi rust-mode flycheck flycheck-rust virtualenvwrapper )
   "Be sure these are installed at launch")
 
 ;; cl is required for the loop
@@ -231,11 +231,14 @@ prefix. common broken format with two C-u prefixes."
 ;; rails.
 (setq scss-compile-at-save nil)
 
+;; turn on flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
 ;; jedi requires python virtualenv to run
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
 
-(setq python-shell-interpreter "python3")
-;;(setq ipython-command "ipython3")
-;;(require 'ipython)
-
+(require 'virtualenvwrapper)
+(venv-initialize-interactive-shells)
+(venv-initialize-eshell)
+(setq venv-location "~/.virtualenvs/")
