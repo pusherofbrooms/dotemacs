@@ -1,10 +1,11 @@
-/elpa/
-/eshell/
-/url/
 /auto-save-list/
 /backups/
+/elpa/
+/eshell/
 /games/
 /.python-environments/
+/request/
+/url/
 session.*
 bookmarks
 tramp

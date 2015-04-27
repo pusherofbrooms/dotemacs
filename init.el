@@ -1,7 +1,10 @@
+;;; package --- Summary
+;;; Commentary:
 ;; This is an emacs init for rails. It is tested with emacs 24.3 and 24.4.
 ;; The base requirement is package.el, which is included in the emacs 24
 ;; distribution.
 
+;;; Code:
 ;; no gnu splash screen on startup
 (setq inhibit-splash-screen t)
 
@@ -88,7 +91,10 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (virtualenvwrapper ess multi-term typing scss-mode rvm robe powerline magit jedi ipython flycheck-rust flx-ido bundler ac-inf-ruby))))
+  (inf-ruby rvm projectile projectile-rails flx-ido robe auto-complete
+             web-mode bundler magit scss-mode jedi rust-mode flycheck
+             flycheck-rust virtualenvwrapper ein ess multi-term powerline
+              ac-inf-ruby))))
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
@@ -152,7 +158,9 @@ prefix. common broken format with two C-u prefixes."
   ;; ths is the list of packages that we look for on startup. If some or all
   ;; are missing, we fetch and install them.
   '(inf-ruby rvm projectile projectile-rails flx-ido robe auto-complete
-    web-mode bundler magit scss-mode jedi rust-mode flycheck flycheck-rust virtualenvwrapper )
+             web-mode bundler magit scss-mode jedi rust-mode flycheck
+             flycheck-rust virtualenvwrapper ein ess multi-term powerline
+              ac-inf-ruby)
   "Be sure these are installed at launch")
 
 ;; cl is required for the loop
@@ -238,7 +246,16 @@ prefix. common broken format with two C-u prefixes."
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
 
+;; python virtualenv settings
 (require 'virtualenvwrapper)
 (venv-initialize-interactive-shells)
 (venv-initialize-eshell)
 (setq venv-location "~/.virtualenvs/")
+
+;; ein (emacs ipython notebook) settings
+(require 'ein)
+(setq ein:use-auto-complete t)
+(global-set-key (kbd "M-1") 'ein:notebooklist-open)
+
+(provide 'init)
+;;; init.el ends here
