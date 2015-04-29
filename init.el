@@ -91,10 +91,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-  (inf-ruby rvm projectile projectile-rails flx-ido robe auto-complete
-             web-mode bundler magit scss-mode jedi rust-mode flycheck
-             flycheck-rust virtualenvwrapper ein ess multi-term powerline
-              ac-inf-ruby))))
+    (python-django inf-ruby rvm projectile projectile-rails flx-ido robe auto-complete web-mode bundler magit scss-mode jedi rust-mode flycheck flycheck-rust virtualenvwrapper ein ess multi-term powerline ac-inf-ruby))))
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
@@ -160,7 +157,7 @@ prefix. common broken format with two C-u prefixes."
   '(inf-ruby rvm projectile projectile-rails flx-ido robe auto-complete
              web-mode bundler magit scss-mode jedi rust-mode flycheck
              flycheck-rust virtualenvwrapper ein ess multi-term powerline
-              ac-inf-ruby)
+              ac-inf-ruby python-django)
   "Be sure these are installed at launch")
 
 ;; cl is required for the loop
@@ -256,6 +253,9 @@ prefix. common broken format with two C-u prefixes."
 (require 'ein)
 (setq ein:use-auto-complete t)
 (global-set-key (kbd "M-1") 'ein:notebooklist-open)
+
+;; python django setup
+;; (require 'python-django)
 
 (provide 'init)
 ;;; init.el ends here
