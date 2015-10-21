@@ -1,6 +1,8 @@
 ;;; package --- Summary
 ;;; Commentary:
-;; This is an emacs init for rails. It is tested with emacs 24.3 and 24.4.
+;; This is an emacs init for all of my programming tasks.
+;; Don't expect it to fulfill any of your needs, but maybe some snips
+;; from it will be useful.
 ;; The base requirement is package.el, which is included in the emacs 24
 ;; distribution.
 
@@ -47,14 +49,6 @@
   (setq buffer-backed-up nil))
 (add-hook 'before-save-hook  'force-backup-of-buffer)
 
-;; default is on. Change to 0 to turn it off. I like the visual queue
-;;these days.
-(blink-cursor-mode 1)
-
-;; I use the scroll bar to indicate where in the file I am. Some folks
-;; turn this off.
-;;(when (fboundp 'scroll-bar-mode) (scroll-bar-mode 0))
-
 ;; No toolbar, no menu. They take up a lot of space.
 (when (fboundp 'tool-bar-mode) (tool-bar-mode 0))
 (menu-bar-mode 0)
@@ -87,11 +81,15 @@
 
 ;; nice medium contrast theme
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(custom-enabled-themes (quote (wombat)))
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (python-django inf-ruby rvm projectile projectile-rails flx-ido robe auto-complete web-mode bundler magit scss-mode jedi rust-mode flycheck flycheck-rust virtualenvwrapper ein ess multi-term powerline ac-inf-ruby))))
+    (tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido robe auto-complete web-mode magit jedi rust-mode flycheck flycheck-rust virtualenvwrapper ein ess multi-term powerline company racer))))
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
@@ -120,8 +118,8 @@
 C-u prefix. mm-dd-yy with two C-u prefixes."
   (interactive "P")
   (let ((format (cond
-                 ((not prefix) "<%Y-%m-%d %a>")
-                 ((equal prefix '(4)) "%Y-%m-%d")
+                 ((not prefix) "<%Y-%m-%d>")
+                 ((equal prefix '(4)) "%Y-%m-%d %a")
                  ((equal prefix '(16)) "%d-%m-%Y"))))
         (insert (format-time-string format))))
 (global-set-key (kbd "C-c d") 'insert-date)
@@ -133,8 +131,8 @@ C-u prefix. mm-dd-yy with two C-u prefixes."
 prefix. common broken format with two C-u prefixes."
   (interactive "P")
   (let ((format (cond
-                 ((not prefix) "<%Y-%m-%d %a %H:%M:%S>")
-                 ((equal prefix '(4)) "%Y-%m-%d %H:%M:%S")
+                 ((not prefix) "<%Y-%m-%d %H:%M:%S>")
+                 ((equal prefix '(4)) "%Y-%m-%d %a %H:%M:%S")
                  ((equal prefix '(16)) "%d-%m-%Y %H:%M:%S"))))
         (insert (format-time-string format))))
 (global-set-key (kbd "C-c t") 'insert-timestamp)
@@ -154,10 +152,10 @@ prefix. common broken format with two C-u prefixes."
 (defvar prelude-packages
   ;; ths is the list of packages that we look for on startup. If some or all
   ;; are missing, we fetch and install them.
-  '(inf-ruby rvm projectile projectile-rails flx-ido robe auto-complete
-             web-mode bundler magit scss-mode jedi rust-mode flycheck
+  '(projectile flx-ido robe auto-complete
+             web-mode magit jedi rust-mode flycheck
              flycheck-rust virtualenvwrapper ein ess multi-term powerline
-              ac-inf-ruby python-django)
+             python-django company racer js2-mode ac-js2 tern tern-auto-complete)
   "Be sure these are installed at launch")
 
 ;; cl is required for the loop
@@ -187,34 +185,29 @@ prefix. common broken format with two C-u prefixes."
 ;; disable ido faces to see flx highlights.
 (setq ido-use-faces nil)
 
-;; inferior ruby mode.
-(autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process" t)
-(add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
-
-;; activate rvm and use the default gem set.
-(require 'rvm)
-(rvm-use-default)
-;; (global-set-key (kbd "C-c r a") 'rvm-activate-corresponding-ruby)
-
 ;; projectile and projectile-rails settings
 (projectile-global-mode)
-;; (add-hook 'ruby-mode-hook 'projectile-on)
-(add-hook 'projectile-mode-hook 'projectile-rails-on)
 
 ;; robe mode for code navigation
 (require 'robe)
-(add-hook 'ruby-mode-hook 'robe-mode)
-
-;; Interact with bundle.
-(require 'bundler)
-(global-set-key (kbd "C-c r b i") 'bundle-install)
-(global-set-key (kbd "C-c r b u") 'bundle-update)
-(global-set-key (kbd "C-c r b c") 'bundle-console)
 
 ;; handle mixed html / programming language files
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.rhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+
+;; javascript using js2-mode and tern
+(add-hook 'js2-mode-hook 'ac-js2-mode)
+(add-hook 'js2-mode-hook (lambda() (tern-mode t)))
+;; I have tern in a non-standard directory
+(setq tern-command '("/home/jjorgensen/node/bin/node" "/home/jjorgensen/.node_modules/bin/tern"))
+(eval-after-load 'tern
+   '(progn
+      (require 'tern-auto-complete)
+      (tern-ac-setup)))
+(add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 ;; magit is a mode for interacting with git.
 ;; The binding below for magit status is convenient for me.
@@ -227,14 +220,6 @@ prefix. common broken format with two C-u prefixes."
 (add-to-list 'ac-modes 'ruby-mode)
 (add-to-list 'ac-modes 'web-mode)
 ;;(add-to-list 'ac-modes 'python-mode)
-;; autocomplete for inf-ruby
-(eval-after-load 'auto-complete
-  '(add-to-list 'ac-modes 'inf-ruby-mode))
-(add-hook 'inf-ruby-mode-hook 'ac-inf-ruby-enable)
-
-;; turn off auto-compile for scss mode as it doesn't seem to work with
-;; rails.
-(setq scss-compile-at-save nil)
 
 ;; turn on flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
@@ -252,10 +237,33 @@ prefix. common broken format with two C-u prefixes."
 ;; ein (emacs ipython notebook) settings
 (require 'ein)
 (setq ein:use-auto-complete t)
-(global-set-key (kbd "M-1") 'ein:notebooklist-open)
+(global-set-key (kbd "M-2") 'ein:notebooklist-open)
 
 ;; python django setup
-;; (require 'python-django)
+(require 'python-django)
+(global-set-key (kbd "M-1") 'python-django-open-project)
+
+;; shell for multi-term
+(setq multi-term-program "/usr/bin/zsh")
+
+;; rust language setup
+(setq racer-rust-src-path "/home/jjorgensen/src/rust/rust/src")
+(setq racer-cmd "/home/jjorgensen/src/rust/racer/target/release/racer")
+(add-to-list 'load-path "/home/jjorgensen/src/rust/racer/editors/emacs")
+(eval-after-load "rust-mode" '(require 'racer))
+(add-hook 'rust-mode-hook 
+  '(lambda () 
+     (racer-activate)
+     (racer-turn-on-eldoc)
+     (local-set-key (kbd "M-.") #'racer-find-definition)
+     (local-set-key (kbd "TAB") #'racer-complete-or-indent)))
+(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
 (provide 'init)
 ;;; init.el ends here
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
