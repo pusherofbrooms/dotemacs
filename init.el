@@ -208,6 +208,9 @@ prefix. common broken format with two C-u prefixes."
       (tern-ac-setup)))
 (add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+;; if you don't want to warn on missing semicolons,
+;; uncomment the following
+;; (setq js2-strict-missing-semi-warning t)
 
 ;; magit is a mode for interacting with git.
 ;; The binding below for magit status is convenient for me.
