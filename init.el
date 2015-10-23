@@ -89,7 +89,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido robe auto-complete web-mode magit jedi rust-mode flycheck flycheck-rust virtualenvwrapper ein ess multi-term powerline company racer))))
+    (yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido robe auto-complete web-mode magit jedi rust-mode flycheck flycheck-rust virtualenvwrapper ein ess multi-term powerline company racer))))
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
@@ -155,7 +155,8 @@ prefix. common broken format with two C-u prefixes."
   '(projectile flx-ido robe auto-complete
              web-mode magit jedi rust-mode flycheck
              flycheck-rust virtualenvwrapper ein ess multi-term powerline
-             python-django company racer js2-mode ac-js2 tern tern-auto-complete)
+             python-django company racer js2-mode ac-js2 tern tern-auto-complete
+             yasnippet)
   "Be sure these are installed at launch")
 
 ;; cl is required for the loop
@@ -217,6 +218,8 @@ prefix. common broken format with two C-u prefixes."
 (global-set-key (kbd "M-`") 'magit-status)
 
 ;; auto-complete
+(require 'yasnippet)
+(yas-global-mode 1)
 (require 'auto-complete-config)
 (ac-config-default)
 (setq ac-ignore-case nil)
