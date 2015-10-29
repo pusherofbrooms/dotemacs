@@ -217,16 +217,6 @@ prefix. common broken format with two C-u prefixes."
 ;; The binding below for magit status is convenient for me.
 (global-set-key (kbd "M-`") 'magit-status)
 
-;; auto-complete
-(require 'yasnippet)
-(yas-global-mode 1)
-(require 'auto-complete-config)
-(ac-config-default)
-(setq ac-ignore-case nil)
-(add-to-list 'ac-modes 'ruby-mode)
-(add-to-list 'ac-modes 'web-mode)
-;;(add-to-list 'ac-modes 'python-mode)
-
 ;; turn on flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
@@ -250,7 +240,8 @@ prefix. common broken format with two C-u prefixes."
 (global-set-key (kbd "M-1") 'python-django-open-project)
 
 ;; shell for multi-term
-(setq multi-term-program "/usr/bin/zsh")
+;; (setq multi-term-program "/usr/bin/zsh")
+(global-set-key [f1] 'ansi-term)
 
 ;; rust language setup
 (setq racer-rust-src-path "/home/jjorgensen/src/rust/rust/src")
@@ -262,8 +253,24 @@ prefix. common broken format with two C-u prefixes."
      (racer-activate)
      (racer-turn-on-eldoc)
      (local-set-key (kbd "M-.") #'racer-find-definition)
-     (local-set-key (kbd "TAB") #'racer-complete-or-indent)))
-(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+     (local-set-key (kbd "TAB") #'racer-complete-or-indent)))(
+                                                              add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+
+(require 'yasnippet)
+;;(yas-global-mode 1)
+(yas-reload-all)
+(add-hook 'js2-mode-hook 'yas-minor-mode)
+(add-hook 'rust-mode-hook 'yas-minor-mode)
+(add-hook 'python-mode-hook 'yas-minor-mode)
+(add-hook 'ruby-mode-hook 'yas-minor-mode)
+(add-hook 'c-mode-hook 'yas-minor-mode)
+
+(require 'auto-complete-config)
+(ac-config-default)
+(setq ac-ignore-case nil)
+(add-to-list 'ac-modes 'ruby-mode)
+(add-to-list 'ac-modes 'web-mode)
+;;(add-to-list 'ac-modes 'python-mode)
 
 (provide 'init)
 ;;; init.el ends here

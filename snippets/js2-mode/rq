@@ -1,0 +1,5 @@
+#name : require
+# key: rq
+# --
+var $1 = require('$1');
+$0

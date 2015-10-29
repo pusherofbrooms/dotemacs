@@ -1,0 +1,6 @@
+#name : while
+# key: wl
+# --
+while($1){
+$0
+}
