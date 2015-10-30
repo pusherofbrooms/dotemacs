@@ -272,6 +272,10 @@ prefix. common broken format with two C-u prefixes."
 (add-to-list 'ac-modes 'web-mode)
 ;;(add-to-list 'ac-modes 'python-mode)
 
+;; eshell customizations
+;; don't leave a dead buffer when an interactive process finishes.
+(setq eshell-destroy-buffer-when-process-dies t)
+
 (provide 'init)
 ;;; init.el ends here
 (custom-set-faces
