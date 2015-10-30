@@ -89,7 +89,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido robe auto-complete web-mode magit jedi rust-mode flycheck flycheck-rust virtualenvwrapper ein ess multi-term powerline company racer))))
+    (nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido robe auto-complete web-mode magit jedi rust-mode flycheck flycheck-rust virtualenvwrapper ein ess multi-term powerline company racer))))
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
@@ -156,7 +156,7 @@ prefix. common broken format with two C-u prefixes."
              web-mode magit jedi rust-mode flycheck
              flycheck-rust virtualenvwrapper ein ess multi-term powerline
              python-django company racer js2-mode ac-js2 tern tern-auto-complete
-             yasnippet)
+             yasnippet nodejs-repl)
   "Be sure these are installed at launch")
 
 ;; cl is required for the loop
@@ -212,6 +212,7 @@ prefix. common broken format with two C-u prefixes."
 ;; if you don't want to warn on missing semicolons,
 ;; uncomment the following
 ;; (setq js2-strict-missing-semi-warning t)
+(global-set-key [f2] 'nodejs-repl)
 
 ;; magit is a mode for interacting with git.
 ;; The binding below for magit status is convenient for me.
