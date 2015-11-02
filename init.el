@@ -89,7 +89,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido robe auto-complete web-mode magit jedi rust-mode flycheck flycheck-rust virtualenvwrapper ein ess multi-term powerline company racer))))
+    (nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit jedi rust-mode flycheck flycheck-rust virtualenvwrapper ein ess multi-term powerline racer))))
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
@@ -152,10 +152,10 @@ prefix. common broken format with two C-u prefixes."
 (defvar prelude-packages
   ;; ths is the list of packages that we look for on startup. If some or all
   ;; are missing, we fetch and install them.
-  '(projectile flx-ido robe auto-complete
+  '(projectile flx-ido auto-complete
              web-mode magit jedi rust-mode flycheck
              flycheck-rust virtualenvwrapper ein ess multi-term powerline
-             python-django company racer js2-mode ac-js2 tern tern-auto-complete
+             python-django racer js2-mode ac-js2 tern tern-auto-complete
              yasnippet nodejs-repl)
   "Be sure these are installed at launch")
 
@@ -188,9 +188,6 @@ prefix. common broken format with two C-u prefixes."
 
 ;; projectile and projectile-rails settings
 (projectile-global-mode)
-
-;; robe mode for code navigation
-(require 'robe)
 
 ;; handle mixed html / programming language files
 (require 'web-mode)
