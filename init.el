@@ -211,6 +211,9 @@ prefix. common broken format with two C-u prefixes."
 ;; if you don't want to warn on missing semicolons,
 ;; uncomment the following
 ;; (setq js2-strict-missing-semi-warning t)
+;;
+;; nodejs repl. You'll be shocked to know that it requires
+;; the nodejs-repl package.
 (global-set-key [f2] 'nodejs-repl)
 
 ;; magit is a mode for interacting with git.
