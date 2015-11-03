@@ -79,6 +79,9 @@
 (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
 
+;; Set tramp to use ssh instead of scp
+(setq tramp-default-method "ssh")
+
 ;; nice medium contrast theme
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -93,7 +96,6 @@
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (global-set-key (kbd "C-c c") 'org-capture)
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c b") 'org-iswitchb)
