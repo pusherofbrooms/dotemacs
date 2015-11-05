@@ -92,7 +92,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit jedi rust-mode flycheck flycheck-rust virtualenvwrapper ein ess multi-term powerline racer))))
+    (nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit jedi rust-mode flycheck flycheck-rust virtualenvwrapper ein ess multi-term racer))))
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
@@ -156,7 +156,7 @@ prefix. common broken format with two C-u prefixes."
   ;; are missing, we fetch and install them.
   '(projectile flx-ido auto-complete
              web-mode magit jedi rust-mode flycheck
-             flycheck-rust virtualenvwrapper ein ess multi-term powerline
+             flycheck-rust virtualenvwrapper ein ess multi-term
              python-django racer js2-mode ac-js2 tern tern-auto-complete
              yasnippet nodejs-repl)
   "Be sure these are installed at launch")
