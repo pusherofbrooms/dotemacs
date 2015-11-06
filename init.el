@@ -191,6 +191,9 @@ prefix. common broken format with two C-u prefixes."
 ;; projectile and projectile-rails settings
 (projectile-global-mode)
 
+;; turn on flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
 ;; handle mixed html / programming language files
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
@@ -220,9 +223,11 @@ prefix. common broken format with two C-u prefixes."
 ;; The binding below for magit status is convenient for me.
 (global-set-key (kbd "M-`") 'magit-status)
 
-;; turn on flycheck
-(add-hook 'after-init-hook #'global-flycheck-mode)
-
+;; flycheck syntax checkers for python. flycheck will chose flake8 over pylint
+;; if both are defined.
+(setq flycheck-python-flake8-executable "~/.virtualenvs/emacsenv/bin/flake8")
+;; (setq flycheck-python-pylint-executable "~/.virtualenvs/emacsenv/bin/pylint")
+;; (add-hook 'python-mode-hook #'(lambda () (setq flycheck-checker 'python-pylint)))
 ;; jedi requires python virtualenv to run
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
