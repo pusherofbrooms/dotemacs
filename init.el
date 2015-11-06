@@ -204,7 +204,7 @@ prefix. common broken format with two C-u prefixes."
 (add-hook 'js2-mode-hook 'ac-js2-mode)
 (add-hook 'js2-mode-hook (lambda() (tern-mode t)))
 ;; I have tern in a non-standard directory
-(setq tern-command '("/home/jjorgensen/node/bin/node" "/home/jjorgensen/.node_modules/bin/tern"))
+(setq tern-command '("~/node/bin/node" "~/.node_modules/bin/tern"))
 (eval-after-load 'tern
    '(progn
       (require 'tern-auto-complete)
@@ -252,9 +252,9 @@ prefix. common broken format with two C-u prefixes."
 (global-set-key [f1] 'ansi-term)
 
 ;; rust language setup
-(setq racer-rust-src-path "/home/jjorgensen/src/rust/rust/src")
-(setq racer-cmd "/home/jjorgensen/src/rust/racer/target/release/racer")
-(add-to-list 'load-path "/home/jjorgensen/src/rust/racer/editors/emacs")
+(setq racer-rust-src-path "~/src/rust/rust/src")
+(setq racer-cmd "~/src/rust/racer/target/release/racer")
+(add-to-list 'load-path "~/src/rust/racer/editors/emacs")
 (eval-after-load "rust-mode" '(require 'racer))
 (add-hook 'rust-mode-hook 
   '(lambda () 
