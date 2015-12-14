@@ -79,6 +79,10 @@
 (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
 
+;; eshell customizations
+;; don't leave a dead buffer when an interactive process finishes.
+(setq eshell-destroy-buffer-when-process-dies t)
+
 ;; Set tramp to use ssh instead of scp
 (setq tramp-default-method "ssh")
 
@@ -92,7 +96,9 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit jedi rust-mode flycheck flycheck-rust virtualenvwrapper ein ess multi-term racer))))
+    (markdown-mode nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit jedi rust-mode flycheck flycheck-rust virtualenvwrapper ein ess ac-racer)))
+ '(racer-cmd (expand-file-name "~/src/rust/racer/target/release/racer"))
+ '(racer-rust-src-path (expand-file-name "~/src/rust/rustc/src")))
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
@@ -154,11 +160,30 @@ prefix. common broken format with two C-u prefixes."
 (defvar prelude-packages
   ;; ths is the list of packages that we look for on startup. If some or all
   ;; are missing, we fetch and install them.
-  '(projectile flx-ido auto-complete
-             web-mode magit jedi rust-mode flycheck
-             flycheck-rust virtualenvwrapper ein ess multi-term
-             python-django racer js2-mode ac-js2 tern tern-auto-complete
-             yasnippet nodejs-repl)
+  '(
+    ac-js2
+    ac-racer
+    auto-complete
+    ein
+    ess
+    flx-ido
+    flycheck
+    flycheck-rust
+    jedi
+    js2-mode
+    magit
+    markdown-mode
+    nodejs-repl
+    projectile
+    python-django
+    rust-mode
+    tern
+    tern-auto-complete
+    virtualenvwrapper
+    web-mode
+    yaml-mode
+    yasnippet
+    )
   "Be sure these are installed at launch")
 
 ;; cl is required for the loop
@@ -247,22 +272,28 @@ prefix. common broken format with two C-u prefixes."
 (require 'python-django)
 (global-set-key (kbd "M-1") 'python-django-open-project)
 
-;; shell for multi-term
-;; (setq multi-term-program "/usr/bin/zsh")
+;; ansi-term settings
 (global-set-key [f1] 'ansi-term)
+;; kill process on terminal exit. scraped from echosa.github.io/blog/2012/06/06/improving-ansi-term/
+(defadvice term-sentinel (around my-advice-term-sentinel (proc msg))
+  (if (memq (process-status proc) '(signal exit))
+      (let ((buffer (process-buffer proc)))
+        ad-do-it
+        (kill-buffer buffer))
+    ad-do-it))
+(ad-activate 'term-sentinel)
+;; always use bash
+(defvar my-term-shell "/bin/bash")
+(defadvice ansi-term (before force-bash)
+  (interactive (list my-term-shell)))
+(ad-activate 'ansi-term)
 
 ;; rust language setup
-(setq racer-rust-src-path "~/src/rust/rust/src")
-(setq racer-cmd "~/src/rust/racer/target/release/racer")
-(add-to-list 'load-path "~/src/rust/racer/editors/emacs")
-(eval-after-load "rust-mode" '(require 'racer))
-(add-hook 'rust-mode-hook 
-  '(lambda () 
-     (racer-activate)
-     (racer-turn-on-eldoc)
-     (local-set-key (kbd "M-.") #'racer-find-definition)
-     (local-set-key (kbd "TAB") #'racer-complete-or-indent)))(
-                                                              add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+(defun my/racer-mode-hook ()
+  (ac-racer-setup))
+(add-hook 'rust-mode-hook 'my/racer-mode-hook)
+
+(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
 (require 'yasnippet)
 ;;(yas-global-mode 1)
@@ -280,9 +311,9 @@ prefix. common broken format with two C-u prefixes."
 (add-to-list 'ac-modes 'web-mode)
 ;;(add-to-list 'ac-modes 'python-mode)
 
-;; eshell customizations
-;; don't leave a dead buffer when an interactive process finishes.
-(setq eshell-destroy-buffer-when-process-dies t)
+;; yaml-mode for salt files
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.sls\\'" . yaml-mode))
 
 (provide 'init)
 ;;; init.el ends here
