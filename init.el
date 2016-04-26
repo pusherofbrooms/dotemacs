@@ -86,6 +86,9 @@
 ;; Set tramp to use ssh instead of scp
 (setq tramp-default-method "ssh")
 
+;; ediff side by side
+(setq ediff-split-window-function 'split-window-horizontally)
+
 ;; nice medium contrast theme
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -96,9 +99,9 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (markdown-mode nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit jedi rust-mode flycheck flycheck-rust virtualenvwrapper ein ess ac-racer)))
+    (ac-racer exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
  '(racer-cmd (expand-file-name "~/src/rust/racer/target/release/racer"))
- '(racer-rust-src-path (expand-file-name "~/src/rust/rustc/src")))
+ '(racer-rust-src-path (expand-file-name "~/src/rust/rust/src")))
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
@@ -111,6 +114,7 @@
          "* TODO %?\n %i\n %a")
         ("j" "Journal" entry (file+datetree "~/notes.org")
          "* %?\nEntered on %U\n %i\n %a")))
+(setq org-todo-keywords '((type "TODO" "IDEA" "|" "DONE")))
 
 ;; dired-x experimentation. Feel free to hack this out.
 (add-hook 'dired-load-hook
@@ -150,9 +154,9 @@ prefix. common broken format with two C-u prefixes."
 ;;
 (require 'package)
 ;; extra package repositories
-(add-to-list 'package-archives
-	     '("marmalade" .
-	       "http://marmalade-repo.org/packages/") t)
+;;(add-to-list 'package-archives
+;;             '("marmalade" .
+;;               "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
 	     '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
@@ -166,6 +170,7 @@ prefix. common broken format with two C-u prefixes."
     auto-complete
     ein
     ess
+    exec-path-from-shell
     flx-ido
     flycheck
     flycheck-rust
@@ -176,6 +181,7 @@ prefix. common broken format with two C-u prefixes."
     nodejs-repl
     projectile
     python-django
+    racer
     rust-mode
     tern
     tern-auto-complete
@@ -205,6 +211,12 @@ prefix. common broken format with two C-u prefixes."
       (package-install p))))
 (provide 'prelude-packages)
 
+;; It's inelegant but I want to pick up the path from shell when on
+;; os x. apparently, due to a current bug there isn't a way to set
+;; the path for gui apps.
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
 ;; fuzzy matching in find-file, buffer searches, and other places.
 (require 'flx-ido)
 (ido-mode 1)
@@ -229,7 +241,7 @@ prefix. common broken format with two C-u prefixes."
 (add-hook 'js2-mode-hook 'ac-js2-mode)
 (add-hook 'js2-mode-hook (lambda() (tern-mode t)))
 ;; I have tern in a non-standard directory
-(setq tern-command '("~/node/bin/node" "~/.node_modules/bin/tern"))
+(setq tern-command '("~/node/bin/node" "~/node/bin/tern"))
 (eval-after-load 'tern
    '(progn
       (require 'tern-auto-complete)
@@ -299,7 +311,8 @@ prefix. common broken format with two C-u prefixes."
 ;;(yas-global-mode 1)
 (yas-reload-all)
 (add-hook 'js2-mode-hook 'yas-minor-mode)
-(add-hook 'rust-mode-hook 'yas-minor-mode)
+;; no snippets for rust yet
+;; (add-hook 'rust-mode-hook 'yas-minor-mode)
 (add-hook 'python-mode-hook 'yas-minor-mode)
 (add-hook 'ruby-mode-hook 'yas-minor-mode)
 (add-hook 'c-mode-hook 'yas-minor-mode)
