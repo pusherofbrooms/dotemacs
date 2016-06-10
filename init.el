@@ -1,9 +1,9 @@
 ;;; package --- Summary
 ;;; Commentary:
-;; This is an emacs init for all of my programming tasks.
+;; This is an Emacs init for all of my programming tasks.
 ;; Don't expect it to fulfill any of your needs, but maybe some snips
 ;; from it will be useful.
-;; The base requirement is package.el, which is included in the emacs 24
+;; The base requirement is package.el, which is included in the Emacs 24
 ;; distribution.
 
 ;;; Code:
@@ -32,6 +32,10 @@
 
 ;; set apropos to search more broadly.
 (setq apropos-do-all t)
+
+;; don't add newline at the end of the visited file.
+;; many folks won't want this.
+(setq mode-require-final-newline nil)
 
 ;; Backup file buffer settings.
 (setq
@@ -99,7 +103,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (ac-racer exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
+    (go-mode ac-racer exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
  '(racer-cmd (expand-file-name "~/src/rust/racer/target/release/racer"))
  '(racer-rust-src-path (expand-file-name "~/src/rust/rust/src")))
 
@@ -126,8 +130,8 @@
 ;; Pulled from emacs wiki and modified a bit.
 ;; "C-c d" inserts a yyyy-mm-dd date.
 (defun insert-date (prefix)
-  "Insert the current org-mode formated date. ISO format with
-C-u prefix. mm-dd-yy with two C-u prefixes."
+  "Insert the current org-mode formated date.
+  ISO format with C-u prefix.  mm-dd-yy with two C-u prefixes."
   (interactive "P")
   (let ((format (cond
                  ((not prefix) "<%Y-%m-%d>")
@@ -139,8 +143,8 @@ C-u prefix. mm-dd-yy with two C-u prefixes."
 ;; Similar to insert-date except that we add HH:MM:SS. Adjust the format
 ;; strings to taste. If you don't like seconds, remove the ":%S"
 (defun insert-timestamp (prefix)
-  "Insert the current org-mode format timestamp. ISO format with C-u
-prefix. common broken format with two C-u prefixes."
+  "Insert the current org-mode format timestamp.
+  ISO format with C-u prefix.  common broken format with two C-u prefixes."
   (interactive "P")
   (let ((format (cond
                  ((not prefix) "<%Y-%m-%d %H:%M:%S>")
@@ -174,6 +178,7 @@ prefix. common broken format with two C-u prefixes."
     flx-ido
     flycheck
     flycheck-rust
+    go-mode
     jedi
     js2-mode
     magit
@@ -190,7 +195,7 @@ prefix. common broken format with two C-u prefixes."
     yaml-mode
     yasnippet
     )
-  "Be sure these are installed at launch")
+  "Be sure these are installed at launch.")
 
 ;; cl is required for the loop
 (require 'cl)
@@ -324,8 +329,8 @@ prefix. common broken format with two C-u prefixes."
 (add-to-list 'ac-modes 'web-mode)
 ;;(add-to-list 'ac-modes 'python-mode)
 
-;; yaml-mode for salt files
 (require 'yaml-mode)
+;; yaml-mode for salt files
 (add-to-list 'auto-mode-alist '("\\.sls\\'" . yaml-mode))
 
 (provide 'init)
