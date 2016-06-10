@@ -1,3 +1,12 @@
+abbrev_defs
+ac-comphist.dat
+bookmarks
+ido.last
+network-security.data
+projectile-bookmarks.eld
+projectile.cache
+session.*
+tramp
 /auto-save-list/
 /backups/
 /elpa/
@@ -6,10 +15,3 @@
 /.python-environments/
 /request/
 /url/
-session.*
-bookmarks
-tramp
-projectile.cache
-projectile-bookmarks.eld
-ac-comphist.dat
-network-security.data
