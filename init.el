@@ -103,7 +103,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (go-mode ac-racer exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
+    (multiple-cursors go-mode ac-racer exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
  '(racer-cmd (expand-file-name "~/src/rust/racer/target/release/racer"))
  '(racer-rust-src-path (expand-file-name "~/src/rust/rust/src")))
 
@@ -183,6 +183,7 @@
     js2-mode
     magit
     markdown-mode
+    multiple-cursors
     nodejs-repl
     projectile
     python-django
