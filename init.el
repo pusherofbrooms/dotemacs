@@ -103,7 +103,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (multiple-cursors go-mode ac-racer exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
+    (cargo multiple-cursors go-mode ac-racer exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
  '(racer-cmd (expand-file-name "~/src/rust/racer/target/release/racer"))
  '(racer-rust-src-path (expand-file-name "~/src/rust/rust/src")))
 
@@ -172,6 +172,7 @@
     ac-js2
     ac-racer
     auto-complete
+    cargo
     ein
     ess
     exec-path-from-shell
@@ -310,7 +311,7 @@
 (defun my/racer-mode-hook ()
   (ac-racer-setup))
 (add-hook 'rust-mode-hook 'my/racer-mode-hook)
-
+(add-hook 'rust-mode-hook 'cargo-minor-mode)
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
 (require 'yasnippet)
@@ -333,6 +334,12 @@
 (require 'yaml-mode)
 ;; yaml-mode for salt files
 (add-to-list 'auto-mode-alist '("\\.sls\\'" . yaml-mode))
+
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 (provide 'init)
 ;;; init.el ends here

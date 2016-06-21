@@ -2,6 +2,7 @@ abbrev_defs
 ac-comphist.dat
 bookmarks
 ido.last
+.mc-lists.el
 network-security.data
 projectile-bookmarks.eld
 projectile.cache
