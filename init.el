@@ -103,7 +103,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (cargo multiple-cursors go-mode ac-racer exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet tern-auto-complete tern ac-js2 js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
+    (racer company cargo multiple-cursors go-mode exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
  '(racer-cmd (expand-file-name "~/src/rust/racer/target/release/racer"))
  '(racer-rust-src-path (expand-file-name "~/src/rust/rust/src")))
 
@@ -135,7 +135,7 @@
   (interactive "P")
   (let ((format (cond
                  ((not prefix) "<%Y-%m-%d>")
-                 ((equal prefix '(4)) "%Y-%m-%d %a")
+                 ((equal prefix '(4)) "%Y-%m-%d")
                  ((equal prefix '(16)) "%d-%m-%Y"))))
         (insert (format-time-string format))))
 (global-set-key (kbd "C-c d") 'insert-date)
@@ -148,7 +148,7 @@
   (interactive "P")
   (let ((format (cond
                  ((not prefix) "<%Y-%m-%d %H:%M:%S>")
-                 ((equal prefix '(4)) "%Y-%m-%d %a %H:%M:%S")
+                 ((equal prefix '(4)) "%Y-%m-%d %H:%M:%S")
                  ((equal prefix '(16)) "%d-%m-%Y %H:%M:%S"))))
         (insert (format-time-string format))))
 (global-set-key (kbd "C-c t") 'insert-timestamp)
@@ -169,10 +169,9 @@
   ;; ths is the list of packages that we look for on startup. If some or all
   ;; are missing, we fetch and install them.
   '(
-    ac-js2
-    ac-racer
     auto-complete
     cargo
+    company
     ein
     ess
     exec-path-from-shell
@@ -185,13 +184,10 @@
     magit
     markdown-mode
     multiple-cursors
-    nodejs-repl
     projectile
     python-django
     racer
     rust-mode
-    tern
-    tern-auto-complete
     virtualenvwrapper
     web-mode
     yaml-mode
@@ -244,24 +240,12 @@
 (add-to-list 'auto-mode-alist '("\\.rhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 
-;; javascript using js2-mode and tern
-(add-hook 'js2-mode-hook 'ac-js2-mode)
-(add-hook 'js2-mode-hook (lambda() (tern-mode t)))
-;; I have tern in a non-standard directory
-(setq tern-command '("~/node/bin/node" "~/node/bin/tern"))
-(eval-after-load 'tern
-   '(progn
-      (require 'tern-auto-complete)
-      (tern-ac-setup)))
+;; javascript
 (add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 ;; if you don't want to warn on missing semicolons,
 ;; uncomment the following
 ;; (setq js2-strict-missing-semi-warning t)
-;;
-;; nodejs repl. You'll be shocked to know that it requires
-;; the nodejs-repl package.
-(global-set-key [f2] 'nodejs-repl)
 
 ;; magit is a mode for interacting with git.
 ;; The binding below for magit status is convenient for me.
@@ -308,9 +292,12 @@
 (ad-activate 'ansi-term)
 
 ;; rust language setup
-(defun my/racer-mode-hook ()
-  (ac-racer-setup))
-(add-hook 'rust-mode-hook 'my/racer-mode-hook)
+(require 'rust-mode)
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode #'eldoc-mode)
+(add-hook 'racer-mode #'company-mode)
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
