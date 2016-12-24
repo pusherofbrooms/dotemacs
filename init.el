@@ -328,6 +328,12 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
+;; use company mode only for rust now.
+;; (setq company-global-modes (rust-mode))
+;; ^^ setting for rust mode only doesn't seem to work, so
+;; set company globally.
+(add-hook 'after-init-hook 'global-company-mode)
+
 (provide 'init)
 ;;; init.el ends here
 (custom-set-faces
