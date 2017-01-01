@@ -93,7 +93,10 @@
 ;; ediff side by side
 (setq ediff-split-window-function 'split-window-horizontally)
 
-;; nice medium contrast theme
+;; if it isn't in elpa, I dump it in lisp/
+;; like avr-asm-flymake
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -103,7 +106,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (racer company cargo multiple-cursors go-mode exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
+    (arduino-mode racer company cargo multiple-cursors go-mode exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
  '(racer-cmd (expand-file-name "~/src/rust/racer/target/release/racer"))
  '(racer-rust-src-path (expand-file-name "~/src/rust/rust/src")))
 
@@ -169,6 +172,7 @@
   ;; ths is the list of packages that we look for on startup. If some or all
   ;; are missing, we fetch and install them.
   '(
+    arduino-mode
     auto-complete
     cargo
     company
@@ -327,6 +331,12 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+;; Arduino additions
+(require 'arduino-mode)
+;; for avr assembly. The mode looks pretty simple.
+;; it may not really be needed
+(require 'avr-asm-flymake)
 
 ;; use company mode only for rust now.
 ;; (setq company-global-modes (rust-mode))
