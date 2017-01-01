@@ -93,10 +93,6 @@
 ;; ediff side by side
 (setq ediff-split-window-function 'split-window-horizontally)
 
-;; if it isn't in elpa, I dump it in lisp/
-;; like avr-asm-flymake
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -218,6 +214,13 @@
       (package-install p))))
 (provide 'prelude-packages)
 
+;; if it isn't in elpa, I dump it in lisp/
+;; like avr-asm-flymake. Apparently, this add to load-path must
+;; be done after all packages are installed as the load-path is
+;; overwritten.
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
+
 ;; It's inelegant but I want to pick up the path from shell when on
 ;; os x. apparently, due to a current bug there isn't a way to set
 ;; the path for gui apps.
@@ -332,10 +335,14 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-;; Arduino additions
+;;; Arduino additions
+;;
+;; https://www.emacswiki.org/emacs/ArduinoSupport for
+;; details on how to setup arduino-mode
 (require 'arduino-mode)
 ;; for avr assembly. The mode looks pretty simple.
-;; it may not really be needed
+;; it may not really be needed.
+;; https://www.emacswiki.org/emacs/ArduinoSupport
 (require 'avr-asm-flymake)
 
 ;; use company mode only for rust now.
