@@ -172,6 +172,7 @@
     auto-complete
     cargo
     company
+    company-quickhelp
     ein
     ess
     exec-path-from-shell
@@ -350,6 +351,7 @@
 ;; ^^ setting for rust mode only doesn't seem to work, so
 ;; set company globally.
 (add-hook 'after-init-hook 'global-company-mode)
+(company-quickhelp-mode 1)
 
 (provide 'init)
 ;;; init.el ends here
