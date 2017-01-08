@@ -102,7 +102,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (arduino-mode racer company cargo multiple-cursors go-mode exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
+    (company-arduino arduino-mode racer company cargo multiple-cursors go-mode exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
  '(racer-cmd (expand-file-name "~/src/rust/racer/target/release/racer"))
  '(racer-rust-src-path (expand-file-name "~/src/rust/rust/src")))
 
@@ -172,7 +172,11 @@
     auto-complete
     cargo
     company
+<<<<<<< HEAD
+    company-arduino
+=======
     company-quickhelp
+>>>>>>> bbd6aceca63d1d67fd336d5b62602d4d8e30003e
     ein
     ess
     exec-path-from-shell
@@ -305,7 +309,6 @@
 (add-hook 'racer-mode #'eldoc-mode)
 (add-hook 'racer-mode #'company-mode)
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-(setq company-tooltip-align-annotations t)
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
@@ -341,15 +344,34 @@
 ;; https://www.emacswiki.org/emacs/ArduinoSupport for
 ;; details on how to setup arduino-mode
 (require 'arduino-mode)
-;; for avr assembly. The mode looks pretty simple.
-;; it may not really be needed.
-;; https://www.emacswiki.org/emacs/ArduinoSupport
-(require 'avr-asm-flymake)
+(require 'company-arduino)
+;; Configuration for irony.el
+;; Add arduino's include options to irony-mode's variable.
+;; irony-mode seems to need an irony server.
+;; running M-x irony-install-server is needed.
+;; I had to install libclang dev libs for this.
+(add-hook 'irony-mode-hook 'company-arduino-turn-on)
+;; Configuration for company-c-headers.el
+;; The `company-arduino-append-include-dirs' function appends
+;; Arduino's include directories to the default directories
+;; if `default-directory' is inside `company-arduino-home'. Otherwise
+;; just returns the default directories.
+;; Please change the default include directories accordingly.
+(defun my-company-c-headers-get-system-path ()
+  "Return the system include path for the current buffer."
+  (let ((default '("/usr/include/" "/usr/local/include/")))
+    (company-arduino-append-include-dirs default t)))
+(setq company-c-headers-path-system 'my-company-c-headers-get-system-path)
+;; Activate irony-mode on arudino-mode
+(add-hook 'arduino-mode-hook 'irony-mode)
 
 ;; use company mode only for rust now.
 ;; (setq company-global-modes (rust-mode))
 ;; ^^ setting for rust mode only doesn't seem to work, so
 ;; set company globally.
+(add-to-list 'company-backends 'company-irony)
+(add-to-list 'company-backends 'company-c-headers)
+(setq company-tooltip-align-annotations t)
 (add-hook 'after-init-hook 'global-company-mode)
 (company-quickhelp-mode 1)
 
