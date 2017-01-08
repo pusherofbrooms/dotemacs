@@ -343,6 +343,19 @@
 (require 'arduino-mode)
 (require 'company-arduino)
 ;; Configuration for irony.el
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+(add-hook 'arduino-mode-hook 'irony-mode)
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 ;; Add arduino's include options to irony-mode's variable.
 ;; irony-mode seems to need an irony server.
 ;; running M-x irony-install-server is needed.
@@ -356,11 +369,9 @@
 ;; Please change the default include directories accordingly.
 (defun my-company-c-headers-get-system-path ()
   "Return the system include path for the current buffer."
-  (let ((default '("/usr/include/" "/usr/local/include/")))
+  (let ((default '("/usr/include/" "/usr/lib/llvm-3.8/include/")))
     (company-arduino-append-include-dirs default t)))
 (setq company-c-headers-path-system 'my-company-c-headers-get-system-path)
-;; Activate irony-mode on arudino-mode
-(add-hook 'arduino-mode-hook 'irony-mode)
 
 ;; use company mode only for rust now.
 ;; (setq company-global-modes (rust-mode))
@@ -369,6 +380,8 @@
 (add-to-list 'company-backends 'company-irony)
 (add-to-list 'company-backends 'company-c-headers)
 (setq company-tooltip-align-annotations t)
+;; Don't downcase suggestions.
+(setq company-dabbrev-downcase nil)
 (add-hook 'after-init-hook 'global-company-mode)
 (company-quickhelp-mode 1)
 
