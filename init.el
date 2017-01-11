@@ -102,7 +102,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (company-quickhelp company-arduino arduino-mode racer company cargo multiple-cursors go-mode exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
+    (company-quickhelp  arduino-mode racer company cargo multiple-cursors go-mode exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
  '(racer-cmd (expand-file-name "~/src/rust/racer/target/release/racer"))
  '(racer-rust-src-path (expand-file-name "~/src/rust/rust/src")))
 
@@ -172,7 +172,6 @@
     auto-complete
     cargo
     company
-    company-arduino
     company-quickhelp
     ein
     ess
@@ -341,44 +340,11 @@
 ;; https://www.emacswiki.org/emacs/ArduinoSupport for
 ;; details on how to setup arduino-mode
 (require 'arduino-mode)
-(require 'company-arduino)
-;; Configuration for irony.el
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'objc-mode-hook 'irony-mode)
-(add-hook 'arduino-mode-hook 'irony-mode)
-;; replace the `completion-at-point' and `complete-symbol' bindings in
-;; irony-mode's buffers by irony-mode's function
-(defun my-irony-mode-hook ()
-  (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-;; Add arduino's include options to irony-mode's variable.
-;; irony-mode seems to need an irony server.
-;; running M-x irony-install-server is needed.
-;; I had to install libclang dev libs for this.
-(add-hook 'irony-mode-hook 'company-arduino-turn-on)
-;; Configuration for company-c-headers.el
-;; The `company-arduino-append-include-dirs' function appends
-;; Arduino's include directories to the default directories
-;; if `default-directory' is inside `company-arduino-home'. Otherwise
-;; just returns the default directories.
-;; Please change the default include directories accordingly.
-(defun my-company-c-headers-get-system-path ()
-  "Return the system include path for the current buffer."
-  (let ((default '("/usr/include/" "/usr/lib/llvm-3.8/include/")))
-    (company-arduino-append-include-dirs default t)))
-(setq company-c-headers-path-system 'my-company-c-headers-get-system-path)
 
 ;; use company mode only for rust now.
 ;; (setq company-global-modes (rust-mode))
 ;; ^^ setting for rust mode only doesn't seem to work, so
 ;; set company globally.
-(add-to-list 'company-backends 'company-irony)
-(add-to-list 'company-backends 'company-c-headers)
 (setq company-tooltip-align-annotations t)
 ;; Don't downcase suggestions.
 (setq company-dabbrev-downcase nil)
