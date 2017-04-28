@@ -102,9 +102,8 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (company-quickhelp  arduino-mode racer company cargo multiple-cursors go-mode exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit rust-mode flycheck flycheck-rust virtualenvwrapper ein ess)))
- '(racer-cmd (expand-file-name "~/src/rust/racer/target/release/racer"))
- '(racer-rust-src-path (expand-file-name "~/src/rust/rust/src")))
+    (csv-mode company-quickhelp arduino-mode racer company cargo multiple-cursors go-mode exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit flycheck  virtualenvwrapper ein ess))))
+
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-default-notes-file "~/notes.org")
@@ -173,12 +172,12 @@
     cargo
     company
     company-quickhelp
+    csv-mode
     ein
     ess
     exec-path-from-shell
     flx-ido
     flycheck
-    flycheck-rust
     go-mode
     jedi
     js2-mode
@@ -188,7 +187,6 @@
     projectile
     python-django
     racer
-    rust-mode
     virtualenvwrapper
     web-mode
     yaml-mode
@@ -299,21 +297,10 @@
   (interactive (list my-term-shell)))
 (ad-activate 'ansi-term)
 
-;; rust language setup
-(require 'rust-mode)
-(add-hook 'rust-mode-hook #'racer-mode)
-(add-hook 'racer-mode #'eldoc-mode)
-(add-hook 'racer-mode #'company-mode)
-(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-(add-hook 'rust-mode-hook 'cargo-minor-mode)
-(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-
 (require 'yasnippet)
 ;;(yas-global-mode 1)
 (yas-reload-all)
 (add-hook 'js2-mode-hook 'yas-minor-mode)
-;; no snippets for rust yet
-;; (add-hook 'rust-mode-hook 'yas-minor-mode)
 (add-hook 'python-mode-hook 'yas-minor-mode)
 (add-hook 'ruby-mode-hook 'yas-minor-mode)
 (add-hook 'c-mode-hook 'yas-minor-mode)
@@ -341,9 +328,6 @@
 ;; details on how to setup arduino-mode
 (require 'arduino-mode)
 
-;; use company mode only for rust now.
-;; (setq company-global-modes (rust-mode))
-;; ^^ setting for rust mode only doesn't seem to work, so
 ;; set company globally.
 (setq company-tooltip-align-annotations t)
 ;; Don't downcase suggestions.
