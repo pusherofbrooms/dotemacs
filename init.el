@@ -234,9 +234,6 @@
 ;; disable ido faces to see flx highlights.
 (setq ido-use-faces nil)
 
-;; projectile and projectile-rails settings
-(projectile-global-mode)
-
 ;; turn on flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
