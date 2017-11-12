@@ -102,7 +102,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (csv-mode company-quickhelp arduino-mode racer company cargo multiple-cursors go-mode exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet js2-mode yaml-mode python-django projectile flx-ido auto-complete web-mode magit flycheck  virtualenvwrapper ein ess))))
+    (csv-mode company-quickhelp racer company cargo multiple-cursors go-mode exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet js2-mode yaml-mode python-django projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess))))
 
 
 ;; org-mode experimentation. Feel free to hack this out.
@@ -167,7 +167,6 @@
   ;; ths is the list of packages that we look for on startup. If some or all
   ;; are missing, we fetch and install them.
   '(
-    arduino-mode
     auto-complete
     cargo
     company
@@ -187,6 +186,7 @@
     projectile
     python-django
     racer
+    rust-mode
     virtualenvwrapper
     web-mode
     yaml-mode
@@ -219,7 +219,6 @@
 ;; overwritten.
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
-
 ;; It's inelegant but I want to pick up the path from shell when on
 ;; os x. apparently, due to a current bug there isn't a way to set
 ;; the path for gui apps.
@@ -235,7 +234,7 @@
 (setq ido-use-faces nil)
 
 ;; turn on flycheck
-(add-hook 'after-init-hook #'global-flycheck-mode)
+;; (add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;; handle mixed html / programming language files
 (require 'web-mode)
@@ -319,11 +318,15 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-;;; Arduino additions
-;;
-;; https://www.emacswiki.org/emacs/ArduinoSupport for
-;; details on how to setup arduino-mode
-(require 'arduino-mode)
+;; rust and racer
+;; before using racer, you need to install rustup
+;; then install racer as per the instructions at
+;; https://github.com/racer-rust/emacs-racer#installation
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+(require 'rust-mode)
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 
 ;; set company globally.
 (setq company-tooltip-align-annotations t)
