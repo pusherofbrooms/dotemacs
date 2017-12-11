@@ -33,6 +33,11 @@
 ;; set apropos to search more broadly.
 (setq apropos-do-all t)
 
+;; move help key to C-?
+(global-set-key (kbd "C-?") 'help-command)
+;; set C-h as backspace, just like in my terminal
+(global-set-key (kbd "C-h") 'backward-delete-char-untabify)
+
 ;; don't add newline at the end of the visited file.
 ;; many folks won't want this.
 (setq mode-require-final-newline nil)
@@ -323,6 +328,7 @@
 ;; then install racer as per the instructions at
 ;; https://github.com/racer-rust/emacs-racer#installation
 (add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'rust-mode-hook #'cargo-minor-mode)
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'racer-mode-hook #'company-mode)
 (require 'rust-mode)
