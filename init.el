@@ -33,11 +33,6 @@
 ;; set apropos to search more broadly.
 (setq apropos-do-all t)
 
-;; move help key to C-?
-(global-set-key (kbd "C-?") 'help-command)
-;; set C-h as backspace, just like in my terminal
-(global-set-key (kbd "C-h") 'backward-delete-char-untabify)
-
 ;; don't add newline at the end of the visited file.
 ;; many folks won't want this.
 (setq mode-require-final-newline nil)
@@ -107,7 +102,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (csv-mode company-quickhelp racer company cargo multiple-cursors go-mode exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet js2-mode yaml-mode python-django projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess))))
+    (toml-mode csv-mode company-quickhelp racer company cargo multiple-cursors go-mode exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet js2-mode yaml-mode python-django projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess))))
 
 
 ;; org-mode experimentation. Feel free to hack this out.
@@ -192,6 +187,7 @@
     python-django
     racer
     rust-mode
+    toml-mode
     virtualenvwrapper
     web-mode
     yaml-mode
