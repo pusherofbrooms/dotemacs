@@ -6,6 +6,11 @@
 ;; The base requirement is package.el, which is included in the Emacs 24
 ;; distribution.
 
+;; I'm old, so I need bigger fonts!
+(set-face-attribute 'default nil
+                    :height 150
+                    )
+
 ;;; Code:
 ;; no gnu splash screen on startup
 (setq inhibit-splash-screen t)
@@ -102,7 +107,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo multiple-cursors go-mode exec-path-from-shell jedi markdown-mode nodejs-repl yasnippet js2-mode yaml-mode python-django projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess))))
+    (yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo go-mode exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess))))
 
 
 ;; org-mode experimentation. Feel free to hack this out.
@@ -177,14 +182,11 @@
     exec-path-from-shell
     flx-ido
     flycheck
-    go-mode
     jedi
     js2-mode
     magit
     markdown-mode
-    multiple-cursors
     projectile
-    python-django
     racer
     rust-mode
     toml-mode
@@ -257,7 +259,7 @@
 
 ;; flycheck syntax checkers for python. flycheck will chose flake8 over pylint
 ;; if both are defined.
-(setq flycheck-python-flake8-executable "~/.virtualenvs/emacsenv/bin/flake8")
+;; (setq flycheck-python-flake8-executable "~/.virtualenvs/emacsenv/bin/flake8")
 ;; (setq flycheck-python-pylint-executable "~/.virtualenvs/emacsenv/bin/pylint")
 ;; (add-hook 'python-mode-hook #'(lambda () (setq flycheck-checker 'python-pylint)))
 ;; jedi requires python virtualenv to run
@@ -274,10 +276,6 @@
 (require 'ein)
 (setq ein:use-auto-complete t)
 (global-set-key (kbd "M-2") 'ein:notebooklist-open)
-
-;; python django setup
-(require 'python-django)
-(global-set-key (kbd "M-1") 'python-django-open-project)
 
 ;; ansi-term settings
 (global-set-key [f1] 'ansi-term)
@@ -313,12 +311,6 @@
 (require 'yaml-mode)
 ;; yaml-mode for salt files
 (add-to-list 'auto-mode-alist '("\\.sls\\'" . yaml-mode))
-
-(require 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 ;; rust and racer
 ;; before using racer, you need to install rustup
