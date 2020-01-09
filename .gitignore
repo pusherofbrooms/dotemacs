@@ -16,5 +16,6 @@ tramp
 /games/
 /.python-environments/
 /request/
+/transient/
 /url/
 /irony/

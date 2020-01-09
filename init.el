@@ -318,6 +318,7 @@
 ;; https://github.com/racer-rust/emacs-racer#installation
 (add-hook 'rust-mode-hook #'racer-mode)
 (add-hook 'rust-mode-hook #'cargo-minor-mode)
+(add-hook 'toml-mode-hook #'cargo-minor-mode)
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'racer-mode-hook #'company-mode)
 (require 'rust-mode)
