@@ -107,7 +107,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo go-mode exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess))))
+    (platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo go-mode exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess))))
 
 
 ;; org-mode experimentation. Feel free to hack this out.
@@ -186,6 +186,7 @@
     js2-mode
     magit
     markdown-mode
+    platformio-mode
     projectile
     racer
     rust-mode
