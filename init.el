@@ -107,7 +107,7 @@
  '(org-agenda-files (quote ("~/notes.org")))
  '(package-selected-packages
    (quote
-    (platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo go-mode exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess))))
+    (irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo go-mode exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess))))
 
 
 ;; org-mode experimentation. Feel free to hack this out.
@@ -165,7 +165,7 @@
 ;;             '("marmalade" .
 ;;               "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
-	     '("melpa" . "http://melpa.milkbox.net/packages/") t)
+	     '("melpa" . "https://melpa.milkbox.net/packages/") t)
 (package-initialize)
 
 (defvar prelude-packages
@@ -175,6 +175,7 @@
     auto-complete
     cargo
     company
+    company-irony
     company-quickhelp
     csv-mode
     ein
@@ -182,6 +183,9 @@
     exec-path-from-shell
     flx-ido
     flycheck
+    flycheck-irony
+    irony
+    irony-eldoc
     jedi
     js2-mode
     magit
@@ -325,12 +329,43 @@
 (require 'rust-mode)
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 
+;; c/c++ and platformio
+(require 'company)
+(require 'platformio-mode)
+
+(add-to-list 'company-backends 'company-irony)
+
+(add-hook 'c++-mode-hook (lambda ()
+                           (irony-mode)
+                           (irony-eldoc)
+                           (platformio-conditionally-enable)))
+
+(add-hook 'c-mode-hook (lambda ()
+                         (irony-mode)
+                         (irony-eldoc)
+                         (platformio-conditionally-enable)))
+
+(add-hook 'irony-mode-hook
+          (lambda ()
+            (define-key irony-mode-map [remap completion-at-point]
+              'irony-completion-at-point-async)
+            (define-key irony-mode-map [remap complete-symbol]
+              'irony-completion-at-point-async)
+            (irony-cdb-autosetup-compile-options)))
+
+(add-hook 'flyckeck-mode-hook 'flycheck-irony-setup)
+
 ;; set company globally.
 (setq company-tooltip-align-annotations t)
 ;; Don't downcase suggestions.
 (setq company-dabbrev-downcase nil)
 (add-hook 'after-init-hook 'global-company-mode)
 (company-quickhelp-mode 1)
+
+;; projectile
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 (provide 'init)
 ;;; init.el ends here
