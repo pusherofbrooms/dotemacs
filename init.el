@@ -165,7 +165,7 @@
 ;;             '("marmalade" .
 ;;               "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
-	     '("melpa" . "https://melpa.milkbox.net/packages/") t)
+	     '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 (defvar prelude-packages
