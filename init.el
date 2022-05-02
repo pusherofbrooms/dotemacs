@@ -203,11 +203,9 @@
     )
   "Be sure these are installed at launch.")
 
-;; cl is required for the loop
-(require 'cl)
 ;; Checks if any packages are missing.
 (defun prelude-packages-installed-p ()
-  (loop for p in prelude-packages
+  (cl-loop for p in prelude-packages
 	when (not (package-installed-p p)) do (return nil)
 	finally (return t)))
 
