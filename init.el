@@ -83,11 +83,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (wombat)))
- '(org-agenda-files (quote ("~/notes.org")))
+ '(custom-enabled-themes '(wombat))
+ '(org-agenda-files '("~/notes.org"))
  '(package-selected-packages
-   (quote
-    (irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo go-mode exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess))))
+   '(counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo go-mode exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess)))
 
 
 ;; org-mode experimentation. Feel free to hack this out.
@@ -147,6 +146,7 @@
     company
     company-irony
     company-quickhelp
+    counsel            ; counsel pulls in ivy and swiper
     csv-mode
     ein
     ess
@@ -176,8 +176,8 @@
 ;; Checks if any packages are missing.
 (defun prelude-packages-installed-p ()
   (cl-loop for p in prelude-packages
-	when (not (package-installed-p p)) do (return nil)
-	finally (return t)))
+	when (not (package-installed-p p)) do (cl-return nil)
+	finally (cl-return t)))
 
 ;; Install any missing packages. Updates are left as an exercise for the
 ;; dear reader.
@@ -195,6 +195,27 @@
 ;; be done after all packages are installed as the load-path is
 ;; overwritten.
 (add-to-list 'load-path "~/.emacs.d/lisp/")
+
+;; ivy completion
+(require 'swiper)
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq ivy-count-format "(%d/%d) ")
+
+(global-set-key (kbd "C-s") 'swiper-isearch)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "M-y") 'counsel-yank-pop)
+(global-set-key (kbd "<f1> f") 'counsel-describe-function)
+(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+(global-set-key (kbd "<f1> l") 'counsel-find-library)
+(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+(global-set-key (kbd "<f2> j") 'counsel-set-variable)
+(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+(global-set-key (kbd "C-c v") 'ivy-push-view)
+(global-set-key (kbd "C-c V") 'ivy-pop-view)
+
 
 ;; It's inelegant but I want to pick up the path from shell when on
 ;; os x. apparently, due to a current bug there isn't a way to set
