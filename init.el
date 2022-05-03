@@ -62,15 +62,6 @@
 ;; yes/no becomes y/n in any yes/no prompt.
 (fset `yes-or-no-p 'y-or-n-p)
 
-;; I use regex search more than search, so swap key bindings
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-M-s") 'isearch-forward)
-(global-set-key (kbd "C-M-r") 'isearch-backward)
-
-;; use ibuffer instead of the standard buffer list.
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
 ;; Bind these files and file types to ruby
 (add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
@@ -210,17 +201,6 @@
 ;; the path for gui apps.
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
-
-;; fuzzy matching in find-file, buffer searches, and other places.
-(require 'flx-ido)
-(ido-mode 1)
-(ido-everywhere 1)
-(flx-ido-mode 1)
-;; disable ido faces to see flx highlights.
-(setq ido-use-faces nil)
-
-;; turn on flycheck
-;; (add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;; handle mixed html / programming language files
 (require 'web-mode)
