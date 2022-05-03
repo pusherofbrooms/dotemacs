@@ -4,5 +4,5 @@
 (require 'exwm-config)
 (exwm-config-example)
 
-(require 'exwm-systemtray)
-(exwm-systemtray-enable)
+;; (require 'exwm-systemtray)
+;; (exwm-systemtray-enable)
