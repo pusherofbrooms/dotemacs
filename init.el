@@ -85,7 +85,7 @@
  '(custom-enabled-themes '(wombat))
  '(org-agenda-files '("~/notes.org"))
  '(package-selected-packages
-   '(counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo go-mode exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess)))
+   '(exwm counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo go-mode exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess)))
 
 
 ;; org-mode experimentation. Feel free to hack this out.
@@ -150,6 +150,7 @@
     ein
     ess
     exec-path-from-shell
+    exwm
     flx-ido
     flycheck
     flycheck-irony
