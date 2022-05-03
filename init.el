@@ -39,36 +39,25 @@
 (setq apropos-do-all t)
 
 ;; don't add newline at the end of the visited file.
-;; many folks won't want this.
 (setq mode-require-final-newline nil)
 
 ;; Backup file buffer settings.
 (setq
  backup-by-copying t                ; don't clobber symlinks
  backup-directory-alist
- '(("." . "~/.emacs.d/backups"))    ; don't litter my fs tree
+ '(("." . "~/.emacs.d/backups"))    ; don't litter my fs
  delete-old-versions t
  kept-new-versions 20
  kept-old-versions 0
  version-control t)                 ; use versioned backups
 
-;; From emacs wiki. Forces a backup of the file by telling
-;; emacs the file hasn't been backed up. Feels hackish.
-(defun force-backup-of-buffer ()
-  (setq buffer-backed-up nil))
-(add-hook 'before-save-hook  'force-backup-of-buffer)
-
-;; No toolbar, no menu. They take up a lot of space.
+;; No toolbar, no menu.
 (when (fboundp 'tool-bar-mode) (tool-bar-mode 0))
 (menu-bar-mode 0)
 
 ;; Show line number and column number in the mode line.
 (line-number-mode 1)
 (column-number-mode 1)
-
-;; I always split my initial window before performing other operations,
-;; so I moved it to startup.
-(split-window-horizontally)
 
 ;; yes/no becomes y/n in any yes/no prompt.
 (fset `yes-or-no-p 'y-or-n-p)
@@ -88,7 +77,7 @@
 (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
 
-;; eshell customizations
+;; shell customizations
 ;; don't leave a dead buffer when an interactive process finishes.
 (setq eshell-destroy-buffer-when-process-dies t)
 
@@ -111,16 +100,6 @@
 
 
 ;; org-mode experimentation. Feel free to hack this out.
-(setq org-default-notes-file "~/notes.org")
-(global-set-key (kbd "C-c c") 'org-capture)
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c b") 'org-iswitchb)
-(global-set-key (kbd "C-c l") 'org-store-link)
-(setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/notes.org" "Tasks")
-         "* TODO %?\n %i\n %a")
-        ("j" "Journal" entry (file+datetree "~/notes.org")
-         "* %?\nEntered on %U\n %i\n %a")))
 (setq org-todo-keywords '((type "TODO" "IDEA" "|" "DONE")))
 
 ;; dired-x experimentation. Feel free to hack this out.
