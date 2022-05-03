@@ -12,6 +12,7 @@ session.*
 tramp
 /auto-save-list/
 /backups/
+/eln-cache/
 /elpa/
 /eshell/
 /games/
@@ -20,3 +21,4 @@ tramp
 /transient/
 /url/
 /irony/
+
