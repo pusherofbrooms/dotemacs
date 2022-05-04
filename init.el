@@ -21,9 +21,6 @@
 ;; opens a buffer on a new file without confirmation (seen in C-x C-f)
 (setq confirm-nonexistent-file-or-buffer nil)
 
-;; opens a new buffer without ido confirmation that the buffer doesn't exist.
-(setq ido-create-new-buffer 'always)
-
 ;; always kill the buffer on exit
 ;; seems to produce the same result as
 ;; (setq kill-buffer-query-functions nil)
@@ -60,6 +57,10 @@
 
 ;; yes/no becomes y/n in any yes/no prompt.
 (fset `yes-or-no-p 'y-or-n-p)
+
+;; display time.
+(setq display-time-format "%Y-%m-%d %H:%M")
+(display-time)
 
 ;; Bind these files and file types to ruby
 (add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
