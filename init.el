@@ -51,16 +51,20 @@
 (when (fboundp 'tool-bar-mode) (tool-bar-mode 0))
 (menu-bar-mode 0)
 
+;; mode-line customization
 ;; Show line number and column number in the mode line.
 (line-number-mode 1)
 (column-number-mode 1)
 
-;; yes/no becomes y/n in any yes/no prompt.
-(fset `yes-or-no-p 'y-or-n-p)
-
 ;; display time.
 (setq display-time-format "%Y-%m-%d %H:%M")
 (display-time)
+
+;; (setq mode-line-format '("%e" mode-line-buffer-identification mode-name " " global-mode-string ))
+
+;; yes/no becomes y/n in any yes/no prompt.
+(fset `yes-or-no-p 'y-or-n-p)
+
 
 ;; Bind these files and file types to ruby
 (add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
