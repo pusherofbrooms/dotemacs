@@ -277,10 +277,10 @@
     ad-do-it))
 (ad-activate 'term-sentinel)
 ;; always use bash
-(defvar my-term-shell "/bin/bash")
-(defadvice ansi-term (before force-bash)
-  (interactive (list my-term-shell)))
-(ad-activate 'ansi-term)
+;; (defvar my-term-shell "/bin/bash")
+;; (defadvice ansi-term (before force-bash)
+;;   (interactive (list my-term-shell)))
+;; (ad-activate 'ansi-term)
 
 (require 'yasnippet)
 ;;(yas-global-mode 1)
