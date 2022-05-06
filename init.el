@@ -82,6 +82,9 @@
 ;; ediff side by side
 (setq ediff-split-window-function 'split-window-horizontally)
 
+;; prefer splitting windows horizontally (along the vertical axis)
+(setq split-width-threshold 79)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
