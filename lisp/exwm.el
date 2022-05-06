@@ -6,3 +6,4 @@
 
 ;; (require 'exwm-systemtray)
 ;; (exwm-systemtray-enable)
+
