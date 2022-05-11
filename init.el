@@ -72,9 +72,12 @@
 (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
 
-;; shell customizations
-;; don't leave a dead buffer when an interactive process finishes.
-(setq eshell-destroy-buffer-when-process-dies t)
+;; eshell customizations
+(setq eshell-hist-ignoredups t
+      eshell-scroll-to-bottom-on-input t
+      eshell-history-size 1000
+      eshell-buffer-maximum-lines 5000
+      eshell-destroy-buffer-when-process-dies t)
 
 ;; Set tramp to use ssh instead of scp
 (setq tramp-default-method "ssh")
@@ -94,7 +97,6 @@
  '(org-agenda-files '("~/notes.org"))
  '(package-selected-packages
    '(exwm counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo go-mode exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess)))
-
 
 ;; org-mode experimentation. Feel free to hack this out.
 (setq org-todo-keywords '((type "TODO" "IDEA" "|" "DONE")))
