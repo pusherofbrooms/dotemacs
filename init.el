@@ -98,9 +98,6 @@
  '(package-selected-packages
    '(exwm counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo go-mode exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess)))
 
-;; org-mode experimentation. Feel free to hack this out.
-(setq org-todo-keywords '((type "TODO" "IDEA" "|" "DONE")))
-
 ;; dired-x experimentation. Feel free to hack this out.
 (add-hook 'dired-load-hook
 	  (lambda ()
