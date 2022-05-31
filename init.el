@@ -66,12 +66,6 @@
 (fset `yes-or-no-p 'y-or-n-p)
 
 
-;; Bind these files and file types to ruby
-(add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
-(add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
-
 ;; eshell customizations
 (setq eshell-hist-ignoredups t
       eshell-scroll-to-bottom-on-input t
@@ -130,6 +124,12 @@
                  ((equal prefix '(16)) "%d-%m-%Y %H:%M:%S"))))
         (insert (format-time-string format))))
 (global-set-key (kbd "C-c t") 'insert-timestamp)
+
+;; It's inelegant but I want to pick up the path from shell when on
+;; os x. apparently, due to a current bug there isn't a way to set
+;; the path for gui apps.
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
 
 ;;
 ;; Try to do any work that doesn't require outside packages before this point.
@@ -197,6 +197,12 @@
       (package-install p))))
 (provide 'prelude-packages)
 
+;; Bind these files and file types to ruby
+(add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
+
 ;; if it isn't in elpa, I dump it in lisp/
 ;; like avr-asm-flymake. Apparently, this add to load-path must
 ;; be done after all packages are installed as the load-path is
@@ -224,13 +230,6 @@
 (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
 (global-set-key (kbd "C-c v") 'ivy-push-view)
 (global-set-key (kbd "C-c V") 'ivy-pop-view)
-
-
-;; It's inelegant but I want to pick up the path from shell when on
-;; os x. apparently, due to a current bug there isn't a way to set
-;; the path for gui apps.
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
 
 ;; handle mixed html / programming language files
 (require 'web-mode)
