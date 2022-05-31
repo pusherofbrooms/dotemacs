@@ -14,7 +14,8 @@ tramp
 /backups/
 /eln-cache/
 /elpa/
-/eshell/
+/eshell/history
+/eshell/lastdir
 /games/
 /.python-environments/
 /request/
