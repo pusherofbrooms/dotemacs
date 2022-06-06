@@ -102,7 +102,7 @@
 ;; Pulled from emacs wiki and modified a bit.
 ;; "C-c d" inserts a yyyy-mm-dd date.
 (defun insert-date (prefix)
-  "Insert the current org-mode formated date.
+  "Insert the current date.
   ISO format with C-u prefix.  mm-dd-yy with two C-u prefixes."
   (interactive "P")
   (let ((format (cond
@@ -115,7 +115,7 @@
 ;; Similar to insert-date except that we add HH:MM:SS. Adjust the format
 ;; strings to taste. If you don't like seconds, remove the ":%S"
 (defun insert-timestamp (prefix)
-  "Insert the current org-mode format timestamp.
+  "Insert the current timestamp.
   ISO format with C-u prefix.  common broken format with two C-u prefixes."
   (interactive "P")
   (let ((format (cond
@@ -124,6 +124,20 @@
                  ((equal prefix '(16)) "%d-%m-%Y %H:%M:%S"))))
         (insert (format-time-string format))))
 (global-set-key (kbd "C-c t") 'insert-timestamp)
+
+;; org-mode visual customizations
+(setq org-hide-emphasis-markers t)
+(setq org-fontify-whole-heading-line t)
+(setq org-src-fontify-natively t)
+(setq org-hide-leading-stars t)
+;; org-mode global keys
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+;; babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((shell . t)
+   (R . t)))
 
 ;; It's inelegant but I want to pick up the path from shell when on
 ;; os x. apparently, due to a current bug there isn't a way to set
@@ -136,9 +150,6 @@
 ;;
 (require 'package)
 ;; extra package repositories
-;;(add-to-list 'package-archives
-;;             '("marmalade" .
-;;               "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
@@ -360,4 +371,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+  '(org-level-1 ((t (:inherit outline-1 :height 1.75))))
+  '(org-level-2 ((t (:inherit outline-2 :height 1.5))))
+  '(org-level-3 ((t (:inherit outline-3 :height 1.25))))
+  '(org-level-4 ((t (:inherit outline-4 :height 1.1)))))
