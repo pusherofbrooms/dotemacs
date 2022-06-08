@@ -139,12 +139,6 @@
  '((shell . t)
    (R . t)))
 
-;; It's inelegant but I want to pick up the path from shell when on
-;; os x. apparently, due to a current bug there isn't a way to set
-;; the path for gui apps.
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
-
 ;;
 ;; Try to do any work that doesn't require outside packages before this point.
 ;;
@@ -207,6 +201,12 @@
     (when (not (package-installed-p p))
       (package-install p))))
 (provide 'prelude-packages)
+
+;; It's inelegant but I want to pick up the path from shell when on
+;; os x. apparently, due to a current bug there isn't a way to set
+;; the path for gui apps.
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
 
 ;; Bind these files and file types to ruby
 (add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
