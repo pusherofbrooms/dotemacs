@@ -277,7 +277,7 @@
 ;; ein (emacs ipython notebook) settings
 (require 'ein)
 (setq ein:use-auto-complete t)
-(global-set-key (kbd "M-2") 'ein:notebooklist-open)
+;; (global-set-key (kbd "M-2") 'ein:notebooklist-open)
 
 ;; ansi-term settings
 (global-set-key [f1] 'ansi-term)
