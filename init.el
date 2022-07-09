@@ -295,6 +295,10 @@
 ;;   (interactive (list my-term-shell)))
 ;; (ad-activate 'ansi-term)
 
+;; C-y doesn't usually work in terminals. This should help.
+(add-hook 'term-mode-hook (lambda ()
+                            (define-key term-raw-map (kbd "C-y") 'term-paste)))
+
 (require 'yasnippet)
 ;;(yas-global-mode 1)
 (yas-reload-all)
