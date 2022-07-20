@@ -130,6 +130,8 @@
 (setq org-fontify-whole-heading-line t)
 (setq org-src-fontify-natively t)
 (setq org-hide-leading-stars t)
+(setq org-startup-truncated nil)
+(add-hook 'org-mode-hook #'toggle-word-wrap)
 ;; org-mode global keys
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
