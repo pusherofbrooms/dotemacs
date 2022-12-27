@@ -1,8 +1,6 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;; This is an Emacs init for all of my programming tasks.
-;; Don't expect it to fulfill any of your needs, but maybe some snips
-;; from it will be useful.
 ;; The base requirement is package.el, which is included in the Emacs 24
 ;; distribution.
 
@@ -60,11 +58,8 @@
 (setq display-time-format "%Y-%m-%d %H:%M")
 (display-time)
 
-;; (setq mode-line-format '("%e" mode-line-buffer-identification mode-name " " global-mode-string ))
-
 ;; yes/no becomes y/n in any yes/no prompt.
 (fset `yes-or-no-p 'y-or-n-p)
-
 
 ;; eshell customizations
 (setq eshell-hist-ignoredups t
@@ -72,9 +67,6 @@
       eshell-history-size 1000
       eshell-buffer-maximum-lines 5000
       eshell-destroy-buffer-when-process-dies t)
-
-;; Set tramp to use ssh instead of scp
-(setq tramp-default-method "ssh")
 
 ;; ediff side by side
 (setq ediff-split-window-function 'split-window-horizontally)
@@ -89,10 +81,14 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(modus-vivendi))
  '(org-agenda-files '("~/notes.org"))
+ '(package-archives
+   '(("gnu" . "https://elpa.gnu.org/packages/")
+     ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+     ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(exwm counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo go-mode exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ein ess)))
+   '(ein exwm counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ess)))
 
-;; dired-x experimentation. Feel free to hack this out.
+;; dired-x file handling
 (add-hook 'dired-load-hook
 	  (lambda ()
 	    (load "dired-x")
@@ -139,82 +135,42 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((shell . t)
-   (R . t)))
-
-;;
-;; Try to do any work that doesn't require outside packages before this point.
-;;
-(require 'package)
-;; extra package repositories
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-
-(defvar prelude-packages
-  ;; ths is the list of packages that we look for on startup. If some or all
-  ;; are missing, we fetch and install them.
-  '(
-    auto-complete
-    cargo
-    company
-    company-irony
-    company-quickhelp
-    counsel            ; counsel pulls in ivy and swiper
-    csv-mode
-    ein
-    ess
-    exec-path-from-shell
-    exwm
-    flx-ido
-    flycheck
-    flycheck-irony
-    irony
-    irony-eldoc
-    jedi
-    js2-mode
-    magit
-    markdown-mode
-    platformio-mode
-    projectile
-    racer
-    rust-mode
-    toml-mode
-    virtualenvwrapper
-    web-mode
-    yaml-mode
-    yasnippet
-    yasnippet-snippets
-    )
-  "Be sure these are installed at launch.")
-
-;; Checks if any packages are missing.
-(defun prelude-packages-installed-p ()
-  (cl-loop for p in prelude-packages
-	when (not (package-installed-p p)) do (cl-return nil)
-	finally (cl-return t)))
-
-;; Install any missing packages. Updates are left as an exercise for the
-;; dear reader.
-(unless (prelude-packages-installed-p)
-  (message "%s" "Emacs Prelude is now refreshing its package database...")
-  (package-refresh-contents)
-  (message "%s" " package refresh is done")
-  (dolist (p prelude-packages)
-    (when (not (package-installed-p p))
-      (package-install p))))
-(provide 'prelude-packages)
-
-;; It's inelegant but I want to pick up the path from shell when on
-;; os x. apparently, due to a current bug there isn't a way to set
-;; the path for gui apps.
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
+   (R . t)
+   (python . t)))
 
 ;; Bind these files and file types to ruby
 (add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
+
+;; ansi-term settings
+(global-set-key [f1] 'ansi-term)
+;; kill process on terminal exit. scraped from echosa.github.io/blog/2012/06/06/improving-ansi-term/
+(defadvice term-sentinel (around my-advice-term-sentinel (proc msg))
+  (if (memq (process-status proc) '(signal exit))
+      (let ((buffer (process-buffer proc)))
+        ad-do-it
+        (kill-buffer buffer))
+    ad-do-it))
+(ad-activate 'term-sentinel)
+
+;; C-y doesn't usually work in terminals. This should help.
+(add-hook 'term-mode-hook (lambda ()
+                            (define-key term-raw-map (kbd "C-y") 'term-paste)))
+
+;;
+;; Try to do any work that doesn't require outside packages before this point.
+;;
+(require 'package)
+(package-initialize)
+(package-install-selected-packages)
+
+;; It's inelegant but I want to pick up the path from shell when on
+;; os x. apparently, due to a current bug there isn't a way to set
+;; the path for gui apps.
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
 
 ;; if it isn't in elpa, I dump it in lisp/
 ;; like avr-asm-flymake. Apparently, this add to load-path must
@@ -257,10 +213,6 @@
 ;; uncomment the following
 ;; (setq js2-strict-missing-semi-warning t)
 
-;; magit is a mode for interacting with git.
-;; The binding below for magit status is convenient for me.
-(global-set-key (kbd "M-`") 'magit-status)
-
 ;; flycheck syntax checkers for python. flycheck will chose flake8 over pylint
 ;; if both are defined.
 ;; (setq flycheck-python-flake8-executable "~/.virtualenvs/emacsenv/bin/flake8")
@@ -275,31 +227,6 @@
 (venv-initialize-interactive-shells)
 (venv-initialize-eshell)
 (setq venv-location "~/.virtualenvs/")
-
-;; ein (emacs ipython notebook) settings
-(require 'ein)
-(setq ein:use-auto-complete t)
-;; (global-set-key (kbd "M-2") 'ein:notebooklist-open)
-
-;; ansi-term settings
-(global-set-key [f1] 'ansi-term)
-;; kill process on terminal exit. scraped from echosa.github.io/blog/2012/06/06/improving-ansi-term/
-(defadvice term-sentinel (around my-advice-term-sentinel (proc msg))
-  (if (memq (process-status proc) '(signal exit))
-      (let ((buffer (process-buffer proc)))
-        ad-do-it
-        (kill-buffer buffer))
-    ad-do-it))
-(ad-activate 'term-sentinel)
-;; always use bash
-;; (defvar my-term-shell "/bin/bash")
-;; (defadvice ansi-term (before force-bash)
-;;   (interactive (list my-term-shell)))
-;; (ad-activate 'ansi-term)
-
-;; C-y doesn't usually work in terminals. This should help.
-(add-hook 'term-mode-hook (lambda ()
-                            (define-key term-raw-map (kbd "C-y") 'term-paste)))
 
 (require 'yasnippet)
 ;;(yas-global-mode 1)
@@ -335,7 +262,6 @@
 ;; c/c++ and platformio
 (require 'company)
 (require 'platformio-mode)
-
 (add-to-list 'company-backends 'company-irony)
 
 (add-hook 'c++-mode-hook (lambda ()
