@@ -80,6 +80,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(modus-vivendi))
+ '(native-comp-async-report-warnings-errors nil)
  '(org-agenda-files '("~/notes.org"))
  '(package-archives
    '(("gnu" . "https://elpa.gnu.org/packages/")
