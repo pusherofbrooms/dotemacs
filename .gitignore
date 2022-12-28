@@ -22,4 +22,5 @@ tramp
 /transient/
 /url/
 /irony/
-
+/multisession/
+/tree-sitter/
