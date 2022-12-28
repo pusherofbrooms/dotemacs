@@ -87,7 +87,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(ein exwm counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ess)))
+   '(vterm ein exwm counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ess)))
 
 ;; dired-x file handling
 (add-hook 'dired-load-hook
@@ -128,6 +128,7 @@
 (setq org-src-fontify-natively t)
 (setq org-hide-leading-stars t)
 (setq org-startup-truncated nil)
+(setq org-confirm-babel-evaluate nil)
 (add-hook 'org-mode-hook #'toggle-word-wrap)
 ;; org-mode global keys
 (global-set-key "\C-cl" 'org-store-link)
@@ -228,6 +229,9 @@
 (venv-initialize-interactive-shells)
 (venv-initialize-eshell)
 (setq venv-location "~/.virtualenvs/")
+
+;; vterm settings
+(global-set-key [f2] 'vterm)
 
 (require 'yasnippet)
 ;;(yas-global-mode 1)
