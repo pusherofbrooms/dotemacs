@@ -87,7 +87,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(vterm ein exwm counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp racer company cargo exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ess)))
+   '(vterm ein exwm counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp company cargo exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ess)))
 
 ;; dired-x file handling
 (add-hook 'dired-load-hook
@@ -232,6 +232,7 @@
 
 ;; vterm settings
 (global-set-key [f2] 'vterm)
+(setq vterm-kill-buffer-on-exit t)
 
 (require 'yasnippet)
 ;;(yas-global-mode 1)
@@ -252,15 +253,12 @@
 ;; yaml-mode for salt files
 (add-to-list 'auto-mode-alist '("\\.sls\\'" . yaml-mode))
 
-;; rust and racer
-;; before using racer, you need to install rustup
-;; then install racer as per the instructions at
-;; https://github.com/racer-rust/emacs-racer#installation
-(add-hook 'rust-mode-hook #'racer-mode)
+;; rust and lsp
 (add-hook 'rust-mode-hook #'cargo-minor-mode)
 (add-hook 'toml-mode-hook #'cargo-minor-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-(add-hook 'racer-mode-hook #'company-mode)
+;; ensure rust-analyzer is installed. from the command line run:
+;; rustup component add rust-analyzer
+(add-hook 'rust-mode-hook 'eglot-ensure)
 (require 'rust-mode)
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 
