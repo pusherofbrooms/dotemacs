@@ -146,8 +146,12 @@
 (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
 
-;; ansi-term settings
-(global-set-key [f1] 'ansi-term)
+;; vterm settings
+(global-set-key [f1] 'vterm)
+(setq vterm-kill-buffer-on-exit t)
+;; term settings
+;; no more ansiterm now that we have vterm
+;;(global-set-key [f1] 'ansi-term)
 ;; kill process on terminal exit. scraped from echosa.github.io/blog/2012/06/06/improving-ansi-term/
 (defadvice term-sentinel (around my-advice-term-sentinel (proc msg))
   (if (memq (process-status proc) '(signal exit))
@@ -229,10 +233,6 @@
 (venv-initialize-interactive-shells)
 (venv-initialize-eshell)
 (setq venv-location "~/.virtualenvs/")
-
-;; vterm settings
-(global-set-key [f2] 'vterm)
-(setq vterm-kill-buffer-on-exit t)
 
 (require 'yasnippet)
 ;;(yas-global-mode 1)
