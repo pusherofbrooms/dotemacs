@@ -87,7 +87,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(popup vterm ein exwm counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp company cargo exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ess)))
+   '(multi-vterm popup vterm ein exwm counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp company cargo exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ess)))
 
 ;; dired-x file handling
 (add-hook 'dired-load-hook
@@ -147,8 +147,9 @@
 (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
 
 ;; vterm settings
-(global-set-key [f1] 'vterm)
+(global-set-key [f1] 'multi-vterm)
 (setq vterm-kill-buffer-on-exit t)
+(setq vterm-max-scrollback 10000)
 ;; term settings
 ;; no more ansiterm now that we have vterm
 ;;(global-set-key [f1] 'ansi-term)
