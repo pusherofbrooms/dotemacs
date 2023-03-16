@@ -146,10 +146,6 @@
 (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
 
-;; vterm settings
-(global-set-key [f1] 'multi-vterm)
-(setq vterm-kill-buffer-on-exit t)
-(setq vterm-max-scrollback 10000)
 ;; term settings
 ;; no more ansiterm now that we have vterm
 ;;(global-set-key [f1] 'ansi-term)
@@ -166,6 +162,12 @@
 (add-hook 'term-mode-hook (lambda ()
                             (define-key term-raw-map (kbd "C-y") 'term-paste)))
 
+;; if it isn't in elpa, I dump it in lisp/
+;; like avr-asm-flymake. Apparently, this add to load-path must
+;; be done after all packages are installed as the load-path is
+;; overwritten.
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
 ;;
 ;; Try to do any work that doesn't require outside packages before this point.
 ;;
@@ -179,11 +181,10 @@
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
-;; if it isn't in elpa, I dump it in lisp/
-;; like avr-asm-flymake. Apparently, this add to load-path must
-;; be done after all packages are installed as the load-path is
-;; overwritten.
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+;; vterm settings
+(global-set-key [f1] 'multi-vterm)
+(setq vterm-kill-buffer-on-exit t)
+(setq vterm-max-scrollback 10000)
 
 ;; ivy completion
 (require 'swiper)
@@ -302,6 +303,7 @@
 
 (provide 'init)
 ;;; init.el ends here
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
