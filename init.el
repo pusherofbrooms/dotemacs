@@ -87,7 +87,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(geiser-guile geiser direnv nix-mode multi-vterm popup vterm exwm counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp company cargo exec-path-from-shell jedi markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode flx-ido auto-complete web-mode magit flycheck virtualenvwrapper ess)))
+   '(geiser-guile geiser direnv multi-vterm popup vterm counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp company exec-path-from-shell markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode auto-complete web-mode magit flycheck)))
 
 ;; dired-x file handling
 (add-hook 'dired-load-hook
@@ -226,15 +226,6 @@
 ;; (setq flycheck-python-flake8-executable "~/.virtualenvs/emacsenv/bin/flake8")
 ;; (setq flycheck-python-pylint-executable "~/.virtualenvs/emacsenv/bin/pylint")
 ;; (add-hook 'python-mode-hook #'(lambda () (setq flycheck-checker 'python-pylint)))
-;; jedi requires python virtualenv to run
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
-
-;; python virtualenv settings
-(require 'virtualenvwrapper)
-(venv-initialize-interactive-shells)
-(venv-initialize-eshell)
-(setq venv-location "~/.virtualenvs/")
 
 (require 'yasnippet)
 ;;(yas-global-mode 1)
