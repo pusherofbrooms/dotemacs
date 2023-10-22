@@ -87,7 +87,34 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(geiser-guile geiser direnv multi-vterm popup vterm counsel irony-eldoc flycheck-irony company-irony platformio-mode yasnippet-snippets toml-mode csv-mode company-quickhelp company exec-path-from-shell markdown-mode yasnippet js2-mode yaml-mode projectile rust-mode auto-complete web-mode magit flycheck)))
+   '(
+     auto-complete
+     company
+     company-irony
+     company-quickhelp
+     counsel
+     csv-mode
+     direnv
+     exec-path-from-shell
+     flycheck
+     flycheck-irony
+     irony-eldoc
+     js2-mode
+     magit
+     markdown-mode
+     multi-vterm
+     org-ai
+     platformio-mode
+     popup
+     projectile
+     rust-mode
+     toml-mode
+     vterm
+     yaml-mode
+     yasnippet
+     yasnippet-snippets
+     web-mode
+     )))
 
 ;; dired-x file handling
 (add-hook 'dired-load-hook
@@ -291,6 +318,11 @@
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+;; org-ai
+(require 'org-ai)
+(add-hook 'org-mode-hook #'org-ai-mode)
+(org-ai-global-mode)
 
 (provide 'init)
 ;;; init.el ends here
