@@ -103,6 +103,7 @@
      magit
      markdown-mode
      multi-vterm
+     nix-mode
      org-ai
      platformio-mode
      popup
