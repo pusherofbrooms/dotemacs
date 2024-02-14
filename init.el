@@ -98,6 +98,7 @@
      exec-path-from-shell
      flycheck
      flycheck-irony
+     gptel
      irony-eldoc
      js2-mode
      magit
@@ -320,10 +321,20 @@
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
+;; gptel
+(require 'gptel)
+(setq-default gptel-backend
+              (gptel-make-openai "llama-cpp"
+                :stream t
+                :protocol "http"
+                :host "localhost:8080"
+                :models '("local"))
+              gptel-model "test")
+
 ;; org-ai
-(require 'org-ai)
-(add-hook 'org-mode-hook #'org-ai-mode)
-(org-ai-global-mode)
+;; (require 'org-ai)
+;; (add-hook 'org-mode-hook #'org-ai-mode)
+;; (org-ai-global-mode)
 
 (provide 'init)
 ;;; init.el ends here
