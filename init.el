@@ -105,7 +105,7 @@
      markdown-mode
      multi-vterm
      nix-mode
-     org-ai
+     org-tree-slide
      platformio-mode
      popup
      projectile
@@ -330,11 +330,8 @@
                 :host "localhost:8080"
                 :models '("local"))
               gptel-model "test")
-
-;; org-ai
-;; (require 'org-ai)
-;; (add-hook 'org-mode-hook #'org-ai-mode)
-;; (org-ai-global-mode)
+;; send to AI
+(global-set-key (kbd "C-c g") 'gptel-send)
 
 (provide 'init)
 ;;; init.el ends here
