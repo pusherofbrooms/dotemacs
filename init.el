@@ -99,8 +99,10 @@
      flycheck
      flycheck-irony
      gptel
+     irony
      irony-eldoc
      js2-mode
+     llama
      magit
      markdown-mode
      multi-vterm
@@ -108,14 +110,17 @@
      org-tree-slide
      platformio-mode
      popup
+     pos-tip
      projectile
      rust-mode
+     swiper
      toml-mode
      vterm
+     web-mode
+     with-editor
      yaml-mode
      yasnippet
      yasnippet-snippets
-     web-mode
      )))
 
 ;; dired-x file handling
